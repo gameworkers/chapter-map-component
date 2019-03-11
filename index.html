@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GWU Chapter Map Examples</title>
+    <style>
+      .map_example {
+        margin: 0 auto 3rem;
+      }
+      .chapter_map,
+      .map_code_example {
+        border: 1px solid #ccc;
+        margin-bottom: 0.3rem;
+      }
+      .map_code_example {
+        background-color: #eee;
+        padding: 0.5rem;
+        width: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>GWU Chapter Map Examples</h1>
+      <div id="app"></div>
+    </main>
+
+    <script src="https://unpkg.com/react@16.3.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/prop-types/prop-types.js"></script>
+
+    <script src="dist/chapter-map-component.js"></script>
+    <script>
+      function CodeExampleWrapper({ children }) {
+        const componentName = typeof children.type === 'string'
+          ? children.type
+          : (children.type.displayName || children.type.name);
+        return (
+          React.createElement(
+            'div',
+            { className: 'map_example' },
+            children,
+            React.createElement(
+              'pre',
+              { className: 'map_code_example' },
+              React.createElement(
+                'code',
+                {},
+                `<${componentName}` +
+                Object.keys(children.props || {}).sort().map(function(propName) {
+                  const value = children.props[propName];
+                  const printedValue = (function() {
+                    switch (typeof value) {
+                      case 'string':
+                        return `"${value}"`;
+                      case 'function': {
+                        const unformatted = value.toString();
+                        const bufferSize = unformatted
+                          .split('\n')
+                          .pop()
+                          .lastIndexOf(' ') + 1;
+                        const formatted = unformatted
+                          .split('\n')
+                          .map((line, index) => {
+                            if (index === 0) {
+                              return line;
+                            }
+                            return line.slice(bufferSize - 2);
+                          }).join('\n');
+                        return `{${formatted}}`;
+                      }
+                      default:
+                        return `{${value}}`;
+                    }
+                  })();
+                  return `\n  ${propName}=${printedValue}`;
+                }).join('') +
+                '\n/>'
+              )
+            )
+          )
+        );
+      }
+
+      ReactDOM.render(
+        React.createElement(
+          React.Fragment,
+          {},
+          React.createElement(
+            CodeExampleWrapper,
+            {},
+            React.createElement(ChapterMapComponent, {
+              markerScale: 0.075,
+              className: 'chapter_map'
+            })
+          ),
+          React.createElement(
+            CodeExampleWrapper,
+            {},
+            React.createElement(ChapterMapComponent, {
+              centerLat: 20,
+              centerLng: -90,
+              width: 600,
+              height: 1000,
+              scale: 400,
+              isGeographyIncluded: function(geography) {
+                return geography.properties.REGION_UN === 'Americas';
+              },
+              markerScale: 0.09,
+              className: 'chapter_map'
+            })
+          ),
+          React.createElement(
+            CodeExampleWrapper,
+            {},
+            React.createElement(ChapterMapComponent, {
+              centerLat: 55,
+              centerLng: 15,
+              width: 720,
+              height: 825,
+              scale: 1125,
+              isGeographyIncluded: function(geography) {
+                return geography.properties.REGION_UN === 'Europe';
+              },
+              className: 'chapter_map'
+            })
+          ),
+          React.createElement(
+            CodeExampleWrapper,
+            {},
+            React.createElement(ChapterMapComponent, {
+              centerLat: -1,
+              centerLng: 120,
+              width: 735,
+              height: 742,
+              scale: 490,
+              isGeographyIncluded: function(geography) {
+                return (
+                  geography.properties.REGION_UN === 'Asia' ||
+                  geography.properties.REGION_UN === 'Oceania'
+                );
+              },
+              className: 'chapter_map'
+            })
+          )
+        ),
+        document.getElementById('app')
+      );
+    </script>
+  </body>
+</html>
