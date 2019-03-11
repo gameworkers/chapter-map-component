@@ -16,11 +16,11 @@ let smallWorldDataPromise;
 let worldDataPromise;
 function getWorldData() {
   return (worldDataPromise =
-    worldDataPromise || fetch("world-50m.json").then(res => res.json()));
+    worldDataPromise || fetch(location.pathname + "/dist/world-50m.json").then(res => res.json()));
 }
 function getSmallWorldData() {
   return (smallWorldDataPromise =
-    smallWorldDataPromise || fetch("world-110m.json").then(res => res.json()));
+    smallWorldDataPromise || fetch(location.pathname + "/distworld-110m.json").then(res => res.json()));
 }
 
 const markers = mapPoints
