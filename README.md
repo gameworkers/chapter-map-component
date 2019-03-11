@@ -26,3 +26,18 @@ import ChapterMapComponent from '@gameworkers/chapter-map-component';
   width={720}
 />
 ```
+
+All props are optional and have the following default values if nothing is specified:
+
+```js
+ChapterMapComponent.defaultProps = {
+  centerLat: 0,
+  centerLng: 0,
+  width: 980,
+  height: 551,
+  scale: 205,
+  isGeographyIncluded: () => true,
+  markerScale: 0.1
+};
+```
+
