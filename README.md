@@ -27,6 +27,8 @@ import ChapterMapComponent from '@gameworkers/chapter-map-component';
 />
 ```
 
+`ChapterMapComponent` expects [`world-100m.json`](https://unpkg.com/@gameworkers/chapter-map-component/dist/world-110m.json) and [`world-50m.json`](https://unpkg.com/@gameworkers/chapter-map-component/dist/world-50m.json) to be found in the same public directory as your JavaScript bundle - the map will fail to load properly otherwise.
+
 All props are optional and have the following default values if nothing is specified:
 
 ```js
@@ -40,4 +42,3 @@ ChapterMapComponent.defaultProps = {
   markerScale: 0.1
 };
 ```
-
