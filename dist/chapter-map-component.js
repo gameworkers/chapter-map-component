@@ -12158,13 +12158,13 @@ var smallWorldDataPromise;
 var worldDataPromise;
 
 function getWorldData() {
-  return worldDataPromise = worldDataPromise || fetch("/world-50m.json").then(function (res) {
+  return worldDataPromise = worldDataPromise || fetch("world-50m.json").then(function (res) {
     return res.json();
   });
 }
 
 function getSmallWorldData() {
-  return smallWorldDataPromise = smallWorldDataPromise || fetch("/world-110m.json").then(function (res) {
+  return smallWorldDataPromise = smallWorldDataPromise || fetch("world-110m.json").then(function (res) {
     return res.json();
   });
 }
