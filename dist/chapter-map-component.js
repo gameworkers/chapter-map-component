@@ -12164,7 +12164,7 @@ function getWorldData() {
 }
 
 function getSmallWorldData() {
-  return smallWorldDataPromise = smallWorldDataPromise || fetch(location.pathname + "/distworld-110m.json").then(function (res) {
+  return smallWorldDataPromise = smallWorldDataPromise || fetch(location.pathname + "/dist/world-110m.json").then(function (res) {
     return res.json();
   });
 }
