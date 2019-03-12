@@ -12352,7 +12352,8 @@ function (_PureComponent) {
       height: height,
       style: {
         width: "100%",
-        height: "auto"
+        height: "auto",
+        backgroundColor: '#fff'
       }
     }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(src_SvgContentElementWrapperWithDefs, {
       forceGrayscale: forceGrayscale
