@@ -111,7 +111,7 @@ class ChapterMapComponent extends PureComponent {
             projectionConfig={{ scale: scale }}
             width={width}
             height={height}
-            style={{ width: "100%", height: "auto" }}
+            style={{ width: "100%", height: "auto", backgroundColor: '#fff' }}
           >
             <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
               <ZoomableGroup center={[centerLng, centerLat]} disablePanning>
