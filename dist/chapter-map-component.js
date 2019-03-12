@@ -12245,13 +12245,13 @@ var smallWorldDataPromise;
 var worldDataPromise;
 
 function getWorldData() {
-  return worldDataPromise = worldDataPromise || fetch((location.pathname + "/world-50m.json").replace(/\/\//g, "/")).then(function (res) {
+  return worldDataPromise = worldDataPromise || fetch(location.pathname + "dist/world-50m.json").then(function (res) {
     return res.json();
   });
 }
 
 function getSmallWorldData() {
-  return smallWorldDataPromise = smallWorldDataPromise || fetch((location.pathname + "/world-110m.json").replace(/\/\//g, "/")).then(function (res) {
+  return smallWorldDataPromise = smallWorldDataPromise || fetch(location.pathname + "dist/world-110m.json").then(function (res) {
     return res.json();
   });
 }
