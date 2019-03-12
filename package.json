@@ -7,7 +7,7 @@
     "build:clean": "rimraf dist",
     "build:webpack": "webpack --progress",
     "build": "npm run build:clean && npm run build:webpack",
-    "dev": "BUILD_MODE=unminimized webpack-serve --open --open-path ./index.html",
+    "dev": "BUILD_MODE=unminimized webpack-serve --open --open-path ./",
     "prepare": "npm run build"
   },
   "repository": {

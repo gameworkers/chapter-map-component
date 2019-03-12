@@ -10,21 +10,44 @@ import {
 
 import mapPoints from "./map_data";
 
+import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
 import GWUMarker from "./GWUMarker";
 
 let smallWorldDataPromise;
 let worldDataPromise;
 function getWorldData() {
   return (worldDataPromise =
-    worldDataPromise || fetch(location.pathname + "/dist/world-50m.json").then(res => res.json()));
+    worldDataPromise ||
+    fetch((location.pathname + "/world-50m.json").replace(/\/\//g, "/")).then(
+      res => res.json()
+    ));
 }
 function getSmallWorldData() {
   return (smallWorldDataPromise =
-    smallWorldDataPromise || fetch(location.pathname + "/dist/world-110m.json").then(res => res.json()));
+    smallWorldDataPromise ||
+    fetch((location.pathname + "/world-110m.json").replace(/\/\//g, "/")).then(
+      res => res.json()
+    ));
 }
 
 const markers = mapPoints
   .filter(point => point.chapter)
+  .sort((a, b) => {
+    // we want to make sure markers lower on the map are painted in front
+    if (a.lat < b.lat) {
+      return 1;
+    }
+    if (a.lat > b.lat) {
+      return -1;
+    }
+    if (a.lng < b.lng) {
+      return 1;
+    }
+    if (a.lng > b.lng) {
+      return -1;
+    }
+    return 0;
+  })
   .map(point => {
     return {
       name: point.location,
@@ -76,7 +99,8 @@ class ChapterMapComponent extends PureComponent {
       isGeographyIncluded,
       markerScale,
       style,
-      className
+      className,
+      forceGrayscale
     } = this.props;
     const { worldData } = this.state;
     return (
@@ -89,60 +113,62 @@ class ChapterMapComponent extends PureComponent {
             height={height}
             style={{ width: "100%", height: "auto" }}
           >
-            <ZoomableGroup center={[centerLng, centerLat]} disablePanning>
-              <Geographies geography={this.state.worldData}>
-                {(geographies, projection) =>
-                  geographies
-                    .filter(isGeographyIncluded)
-                    .map((geography, i) => {
-                      const isHighlighted = mapPoints.some(point => {
-                        return geographyMatchesCountryString(
-                          geography,
-                          point.country
+            <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
+              <ZoomableGroup center={[centerLng, centerLat]} disablePanning>
+                <Geographies geography={this.state.worldData}>
+                  {(geographies, projection) =>
+                    geographies
+                      .filter(isGeographyIncluded)
+                      .map((geography, i) => {
+                        const matchingPoints = mapPoints.filter(point => {
+                          return geographyMatchesCountryString(
+                            geography,
+                            point.country
+                          );
+                        });
+                        const hasChapter = matchingPoints.some(point => {
+                          return point.chapter;
+                        });
+                        let color = "url(#hardlyredpattern)";
+                        if (hasChapter) {
+                          color = "url(#redpattern)";
+                        } else if (matchingPoints.length) {
+                          color = "url(#lessredpattern)";
+                        }
+                        const style = {
+                          fill: color,
+                          stroke: "#222",
+                          strokeWidth: 0.5,
+                          outline: "none"
+                        };
+                        return (
+                          <Geography
+                            key={i}
+                            geography={geography}
+                            projection={projection}
+                            style={{
+                              default: style,
+                              hover: style,
+                              pressed: style
+                            }}
+                          />
                         );
-                      });
-                      return (
-                        <Geography
-                          key={i}
-                          geography={geography}
-                          projection={projection}
-                          style={{
-                            default: {
-                              fill: isHighlighted ? "#ccc" : "#efefef",
-                              stroke: "#333",
-                              strokeWidth: 0.3,
-                              outline: "none"
-                            },
-                            hover: {
-                              fill: "#607D8B",
-                              stroke: "#607D8B",
-                              strokeWidth: 0.75,
-                              outline: "none"
-                            },
-                            pressed: {
-                              fill: "#FF5722",
-                              stroke: "#607D8B",
-                              strokeWidth: 0.75,
-                              outline: "none"
-                            }
-                          }}
-                        />
-                      );
-                    })
-                }
-              </Geographies>
-              <Markers>
-                {markers.map(marker => {
-                  return (
-                    <GWUMarker
-                      key={marker.name}
-                      marker={marker}
-                      scale={markerScale}
-                    />
-                  );
-                })}
-              </Markers>
-            </ZoomableGroup>
+                      })
+                  }
+                </Geographies>
+                <Markers>
+                  {markers.map(marker => {
+                    return (
+                      <GWUMarker
+                        key={marker.name}
+                        marker={marker}
+                        scale={markerScale}
+                      />
+                    );
+                  })}
+                </Markers>
+              </ZoomableGroup>
+            </SvgContentElementWrapperWithDefs>
           </ComposableMap>
         )}
       </div>
@@ -157,7 +183,8 @@ ChapterMapComponent.propTypes = {
   height: PropTypes.number.isRequired,
   scale: PropTypes.number.isRequired,
   isGeographyIncluded: PropTypes.func.isRequired,
-  markerScale: PropTypes.number.isRequired
+  markerScale: PropTypes.number.isRequired,
+  forceGrayscale: PropTypes.bool.isRequired
 };
 
 ChapterMapComponent.defaultProps = {
@@ -167,7 +194,8 @@ ChapterMapComponent.defaultProps = {
   height: 551,
   scale: 205,
   isGeographyIncluded: () => true,
-  markerScale: 0.1
+  markerScale: 0.09,
+  forceGrayscale: false
 };
 
 export default ChapterMapComponent;

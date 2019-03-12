@@ -17,6 +17,7 @@ import ChapterMapComponent from '@gameworkers/chapter-map-component';
   centerLat={55}
   centerLng={15}
   className="chapter_map"
+  forceGrayscale={false}
   height={825}
   isGeographyIncluded={function(geography) {
     return geography.properties.REGION_UN === 'Europe';
@@ -39,6 +40,7 @@ ChapterMapComponent.defaultProps = {
   height: 551,
   scale: 205,
   isGeographyIncluded: () => true,
-  markerScale: 0.1
+  markerScale: 0.1,
+  forceGrayscale: false
 };
 ```

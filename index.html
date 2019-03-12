@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>GWU Chapter Map Examples</title>
     <style>
+      #grayscaleToggle {
+        margin-bottom: 1rem;
+      }
       .map_example {
         margin: 0 auto 3rem;
       }
@@ -23,6 +26,9 @@
   <body>
     <main>
       <h1>GWU Chapter Map Examples</h1>
+      <div>
+        <button id="grayscaleToggle">Toggle Grayscale</button>
+      </div>
       <div id="app"></div>
     </main>
 
@@ -83,69 +89,115 @@
         );
       }
 
-      ReactDOM.render(
-        React.createElement(
-          React.Fragment,
-          {},
+      let forceGrayscale = false;
+      function render() {
+        ReactDOM.render(
           React.createElement(
-            CodeExampleWrapper,
+            React.Fragment,
             {},
-            React.createElement(ChapterMapComponent, {
-              markerScale: 0.075,
-              className: 'chapter_map'
-            })
+            React.createElement(
+              CodeExampleWrapper,
+              {},
+              React.createElement(ChapterMapComponent, {
+                markerScale: 0.075,
+                className: 'chapter_map',
+                forceGrayscale
+              })
+            ),
+            React.createElement(
+              CodeExampleWrapper,
+              {},
+              React.createElement(ChapterMapComponent, {
+                centerLat: 20,
+                centerLng: -90,
+                width: 600,
+                height: 1000,
+                scale: 400,
+                isGeographyIncluded: function(geography) {
+                  return geography.properties.REGION_UN === 'Americas';
+                },
+                markerScale: 0.08,
+                className: 'chapter_map',
+                forceGrayscale
+              })
+            ),
+            React.createElement(
+              CodeExampleWrapper,
+              {},
+              React.createElement(ChapterMapComponent, {
+                centerLat: 55,
+                centerLng: 15,
+                width: 720,
+                height: 825,
+                scale: 1125,
+                isGeographyIncluded: function(geography) {
+                  return geography.properties.REGION_UN === 'Europe';
+                },
+                className: 'chapter_map',
+                forceGrayscale
+              })
+            ),
+            React.createElement(
+              CodeExampleWrapper,
+              {},
+              React.createElement(ChapterMapComponent, {
+                centerLat: -1,
+                centerLng: 120,
+                width: 735,
+                height: 742,
+                scale: 490,
+                isGeographyIncluded: function(geography) {
+                  return (
+                    geography.properties.REGION_UN === 'Asia' ||
+                    geography.properties.REGION_UN === 'Oceania'
+                  );
+                },
+                className: 'chapter_map',
+                forceGrayscale
+              })
+            )
           ),
-          React.createElement(
-            CodeExampleWrapper,
-            {},
-            React.createElement(ChapterMapComponent, {
-              centerLat: 20,
-              centerLng: -90,
-              width: 600,
-              height: 1000,
-              scale: 400,
-              isGeographyIncluded: function(geography) {
-                return geography.properties.REGION_UN === 'Americas';
-              },
-              markerScale: 0.09,
-              className: 'chapter_map'
-            })
-          ),
-          React.createElement(
-            CodeExampleWrapper,
-            {},
-            React.createElement(ChapterMapComponent, {
-              centerLat: 55,
-              centerLng: 15,
-              width: 720,
-              height: 825,
-              scale: 1125,
-              isGeographyIncluded: function(geography) {
-                return geography.properties.REGION_UN === 'Europe';
-              },
-              className: 'chapter_map'
-            })
-          ),
-          React.createElement(
-            CodeExampleWrapper,
-            {},
-            React.createElement(ChapterMapComponent, {
-              centerLat: -1,
-              centerLng: 120,
-              width: 735,
-              height: 742,
-              scale: 490,
-              isGeographyIncluded: function(geography) {
-                return (
-                  geography.properties.REGION_UN === 'Asia' ||
-                  geography.properties.REGION_UN === 'Oceania'
-                );
-              },
-              className: 'chapter_map'
-            })
-          )
-        ),
-        document.getElementById('app')
+          document.getElementById('app')
+        );
+      }
+      render();
+      document.querySelector('#grayscaleToggle')
+        .addEventListener('click', function() {
+          forceGrayscale = !forceGrayscale;
+          render();
+        });
+
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.chapter_map'),
+        function(mapContainer, index) {
+          var a = document.createElement('a');
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          var button = document.createElement('button');
+          button.textContent = 'Save SVG';
+          button.style.position = 'absolute';
+          button.style.top = '5px';
+          button.style.left = '10px';
+          button.onclick = function() {
+            var content = mapContainer.querySelector('svg').outerHTML;
+            if (content.indexOf('xmlns="http://www.w3.org/2000/svg"') === -1) {
+              content = content
+                // make sure it's a valid SVG file format!
+                .replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+            }
+            var blob = new Blob([content], { type: 'image/svg+xml' });
+            var url = URL.createObjectURL(blob);
+            a.href = url;
+            a.download = 'Chapter Map ' + (index + 1) + '.svg';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          };
+          var containerDiv = document.createElement('div');
+          containerDiv.style.position = 'relative';
+          containerDiv.style.height = 0;
+          containerDiv.appendChild(button);
+          mapContainer.appendChild(containerDiv);
+        }
       );
     </script>
   </body>
