@@ -27,7 +27,7 @@
     <main>
       <h1>GWU Chapter Map Examples</h1>
       <div>
-        <button id="grayscaleToggle">Toggle Grayscale</button>
+        <svgButton id="grayscaleToggle">Toggle Grayscale</svgButton>
       </div>
       <div id="app"></div>
     </main>
@@ -171,14 +171,21 @@
         document.querySelectorAll('.chapter_map'),
         function(mapContainer, index) {
           var a = document.createElement('a');
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
           a.style.display = 'none';
           document.body.appendChild(a);
-          var button = document.createElement('button');
-          button.textContent = 'Save SVG';
-          button.style.position = 'absolute';
-          button.style.top = '5px';
-          button.style.left = '10px';
-          button.onclick = function() {
+          var svgButton = document.createElement('button');
+          svgButton.textContent = 'Save SVG';
+          svgButton.style.position = 'absolute';
+          svgButton.style.top = '5px';
+          svgButton.style.left = '10px';
+          var pngButton = document.createElement('button');
+          pngButton.textContent = 'Save PNG';
+          pngButton.style.position = 'absolute';
+          pngButton.style.top = '25px';
+          pngButton.style.left = '10px';
+          function getSvgUrl() {
             var content = mapContainer.querySelector('svg').outerHTML;
             if (content.indexOf('xmlns="http://www.w3.org/2000/svg"') === -1) {
               content = content
@@ -186,16 +193,34 @@
                 .replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
             }
             var blob = new Blob([content], { type: 'image/svg+xml' });
-            var url = URL.createObjectURL(blob);
+            return URL.createObjectURL(blob);
+          }
+          svgButton.onclick = function() {
+            var url = getSvgUrl();
             a.href = url;
             a.download = 'Chapter Map ' + (index + 1) + '.svg';
             a.click();
             window.URL.revokeObjectURL(url);
           };
+          pngButton.onclick = function() {
+            var url = getSvgUrl();
+            var img = new Image();
+            img.onload = function() {
+              canvas.width = img.width;
+              canvas.height = img.height;  
+              ctx.drawImage(img, 0, 0);
+              a.href = canvas.toDataURL('image/png');
+              a.download = 'Chapter Map ' + (index + 1) + '.png';
+              a.click();
+              window.URL.revokeObjectURL(url);
+            }
+            img.src = url;
+          };
           var containerDiv = document.createElement('div');
           containerDiv.style.position = 'relative';
           containerDiv.style.height = 0;
-          containerDiv.appendChild(button);
+          containerDiv.appendChild(svgButton);
+          containerDiv.appendChild(pngButton);
           mapContainer.appendChild(containerDiv);
         }
       );
