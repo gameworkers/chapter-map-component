@@ -7,7 +7,7 @@
 		exports["ChapterMapComponent"] = factory(require("react"), require("prop-types"));
 	else
 		root["ChapterMapComponent"] = factory(root["React"], root["PropTypes"]);
-})((typeof self !== "undefined" ? self : this), function(__WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__3__) {
+})((typeof self !== "undefined" ? self : this), function(__WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1056,7 +1056,7 @@ function polygon_link(array) {
 }
 
 // EXTERNAL MODULE: ./node_modules/d3-array/src/index.js + 31 modules
-var src = __webpack_require__(2);
+var src = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./node_modules/d3-geo/src/clip/extent.js
 
@@ -3309,6 +3309,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__2__;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3994,12 +4000,6 @@ function transpose_length(d) {
 
 
 
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__3__;
 
 /***/ }),
 /* 4 */
@@ -8264,7 +8264,7 @@ function hammerRetroazimuthalRotation(phi0) {
 });
 
 // EXTERNAL MODULE: ./node_modules/d3-array/src/index.js + 31 modules
-var src = __webpack_require__(2);
+var src = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./node_modules/d3-geo-projection/src/healpix.js
 
@@ -11763,7 +11763,7 @@ var external_root_React_commonjs_react_commonjs2_react_amd_react_ = __webpack_re
 var external_root_React_commonjs_react_commonjs2_react_amd_react_default = /*#__PURE__*/__webpack_require__.n(external_root_React_commonjs_react_commonjs2_react_amd_react_);
 
 // EXTERNAL MODULE: external {"root":"PropTypes","commonjs":"prop-types","commonjs2":"prop-types","amd":"prop-types"}
-var external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_ = __webpack_require__(3);
+var external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_ = __webpack_require__(2);
 var external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default = /*#__PURE__*/__webpack_require__.n(external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_);
 
 // EXTERNAL MODULE: ./node_modules/react-simple-maps/lib/index.js
@@ -12089,10 +12089,96 @@ var lib = __webpack_require__(4);
   country: "New Zealand",
   chapter: false
 }]);
+// CONCATENATED MODULE: ./src/SvgContentElementWrapperWithDefs.js
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+var red = "#e5261a";
+
+function MarkerPath(_ref) {
+  var fill = _ref.fill,
+      stroke = _ref.stroke,
+      strokeWidth = _ref.strokeWidth;
+  return external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("path", {
+    fill: fill,
+    stroke: stroke,
+    strokeWidth: strokeWidth,
+    d: "\n        M-78.736,56.784c-89.734,0-162.725,73.003-162.725,162.732c0,36.571,25.572,94.673,76.01,172.686\n        c36.714,56.783,73.96,104.287,74.33,104.75c2.985,3.807,7.553,6.018,12.379,6.018c4.829,0,9.396-2.211,12.381-6.018\n        c0.37-0.463,37.622-47.971,74.33-104.75c50.438-78.013,76.012-136.121,76.012-172.686\n        C83.993,129.787,10.999,56.784-78.736,56.784z\n        M-140.173,241.81c-3.481,2.971-7.626,5.503-12.439,7.6\n        c-4.804,2.094-10.303,3.146-16.504,3.146c-5.293,0-10.114-0.871-14.47-2.616c-4.357-1.741-8.101-4.16-11.226-7.259\n        c-3.136-3.098-5.571-6.775-7.311-11.037c-1.742-4.259-2.616-8.903-2.616-13.936v-0.197c0-4.838,0.89-9.372,2.662-13.602\n        c1.772-4.222,4.248-7.937,7.405-11.131c3.16-3.193,6.909-5.712,11.234-7.55c4.317-1.839,9.061-2.758,14.228-2.758\n        c3.033,0,5.791,0.208,8.28,0.631c2.481,0.417,4.787,1.016,6.916,1.788c2.136,0.776,4.128,1.745,6.002,2.907\n        c1.876,1.158,3.682,2.481,5.421,3.966l-9.391,11.327c-1.291-1.098-2.583-2.067-3.868-2.906c-1.293-0.834-2.63-1.548-4.018-2.126\n        c-1.395-0.583-2.891-1.033-4.507-1.356c-1.614-0.322-3.387-0.484-5.316-0.484c-2.717,0-5.247,0.565-7.603,1.697\n        c-2.354,1.13-4.419,2.651-6.2,4.562c-1.771,1.906-3.158,4.139-4.158,6.692c-1.001,2.555-1.498,5.289-1.498,8.2v0.193\n        c0,3.104,0.497,5.968,1.498,8.588c1,2.617,2.418,4.898,4.263,6.838c1.835,1.941,4,3.44,6.481,4.513\n        c2.481,1.068,5.247,1.598,8.28,1.598c5.545,0,10.226-1.366,14.03-4.096v-9.749h-14.999v-12.872h29.423V241.81z\n        M-51.398,251.879\n        h-12.977l-15.29-44.337l-15.299,44.337h-12.974l-23.13-68.245h15.969l14.038,45.883l15.195-46.077h12.779l15.195,46.077\n        l14.039-45.883h15.58L-51.398,251.879z\n        M38.676,235.323c-1.395,3.81-3.381,6.988-5.956,9.536\n        c-2.585,2.553-5.712,4.455-9.39,5.711c-3.68,1.26-7.777,1.887-12.298,1.887c-9.099,0-16.262-2.517-21.49-7.551\n        c-5.224-5.033-7.839-12.55-7.839-22.554v-38.718h14.905v38.333c0,5.549,1.291,9.729,3.876,12.532\n        c2.575,2.809,6.161,4.217,10.744,4.217c4.579,0,8.161-1.359,10.746-4.07c2.575-2.71,3.868-6.775,3.868-12.194v-38.817h14.912\n        v38.234C40.755,227.032,40.061,231.518,38.676,235.323z\n      "
+  });
+}
+
+function SvgContentElementWrapperWithDefs(_ref2) {
+  var children = _ref2.children,
+      forceGrayscale = _ref2.forceGrayscale,
+      rest = _objectWithoutPropertiesLoose(_ref2, ["children", "forceGrayscale"]);
+
+  return external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.Fragment, null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("defs", null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("filter", {
+    id: "grayscale"
+  }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("feColorMatrix", {
+    type: "saturate",
+    values: "0"
+  })), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("pattern", {
+    id: "redpattern",
+    patternUnits: "userSpaceOnUse",
+    width: "8",
+    height: "8"
+  }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("rect", {
+    style: {
+      opacity: 0.7
+    },
+    width: "8",
+    height: "8",
+    fill: red
+  })), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("pattern", {
+    id: "lessredpattern",
+    patternUnits: "userSpaceOnUse",
+    width: "8",
+    height: "8"
+  }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("rect", {
+    style: {
+      opacity: 0.3
+    },
+    width: "8",
+    height: "8",
+    fill: red
+  })), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("pattern", {
+    id: "hardlyredpattern",
+    patternUnits: "userSpaceOnUse",
+    width: "8",
+    height: "8"
+  }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("rect", {
+    style: {
+      opacity: 0.04
+    },
+    width: "8",
+    height: "8",
+    fill: red
+  })), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", {
+    id: "mapmarker"
+  }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("rect", {
+    x: "-218.979",
+    y: "163.179",
+    fill: "#fff",
+    width: "279.333",
+    height: "106.667"
+  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(MarkerPath, {
+    stroke: "#fff",
+    strokeWidth: 20
+  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(MarkerPath, null)))), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", {
+    filter: forceGrayscale ? "url(#grayscale)" : undefined
+  }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.cloneElement(children, rest)));
+}
+
+SvgContentElementWrapperWithDefs.propTypes = {
+  children: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.element.isRequired,
+  forceGrayscale: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.bool
+};
+/* harmony default export */ var src_SvgContentElementWrapperWithDefs = (SvgContentElementWrapperWithDefs);
 // CONCATENATED MODULE: ./src/GWUMarker.js
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function GWUMarker_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
@@ -12115,16 +12201,16 @@ function (_PureComponent) {
     var _this$props = this.props,
         marker = _this$props.marker,
         scale = _this$props.scale,
-        rest = _objectWithoutPropertiesLoose(_this$props, ["marker", "scale"]);
+        rest = GWUMarker_objectWithoutPropertiesLoose(_this$props, ["marker", "scale"]);
 
     return external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(lib["Marker"], _extends({
       key: marker.name,
       marker: marker
     }, rest), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", {
-      transform: "scale(" + scale + "), translate(-110, -600)"
-    }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("path", {
-      d: "\n                M104.382,145.717c-89.734,0-162.725,73.003-162.725,162.732c0,36.571,25.572,94.673,76.01,172.686\n                c36.714,56.783,73.96,104.287,74.33,104.75c2.985,3.806,7.553,6.017,12.379,6.017c4.829,0,9.396-2.211,12.381-6.017\n                c0.37-0.463,37.622-47.971,74.33-104.75c50.438-78.013,76.012-136.121,76.012-172.686\n                C267.111,218.72,194.117,145.717,104.382,145.717z M42.945,330.743c-3.481,2.971-7.626,5.503-12.439,7.6\n                c-4.804,2.094-10.303,3.146-16.504,3.146c-5.293,0-10.114-0.871-14.47-2.616c-4.357-1.741-8.101-4.16-11.226-7.259\n                c-3.136-3.098-5.571-6.775-7.311-11.037c-1.742-4.259-2.616-8.903-2.616-13.936v-0.197c0-4.838,0.89-9.372,2.662-13.602\n                c1.772-4.222,4.248-7.937,7.405-11.131c3.16-3.193,6.909-5.712,11.234-7.55c4.317-1.839,9.061-2.758,14.228-2.758\n                c3.033,0,5.791,0.208,8.28,0.631c2.481,0.417,4.787,1.016,6.916,1.788c2.136,0.776,4.128,1.745,6.002,2.907\n                c1.876,1.158,3.682,2.481,5.421,3.966l-9.391,11.327c-1.291-1.098-2.583-2.067-3.868-2.906c-1.293-0.834-2.63-1.548-4.018-2.126\n                c-1.395-0.583-2.891-1.033-4.507-1.356c-1.614-0.322-3.387-0.484-5.316-0.484c-2.717,0-5.247,0.565-7.603,1.697\n                c-2.354,1.13-4.419,2.651-6.2,4.562c-1.771,1.906-3.158,4.139-4.158,6.692c-1.001,2.555-1.498,5.289-1.498,8.2v0.193\n                c0,3.104,0.497,5.968,1.498,8.588c1,2.617,2.418,4.898,4.263,6.838c1.835,1.941,4,3.44,6.481,4.513\n                c2.481,1.068,5.247,1.598,8.28,1.598c5.545,0,10.226-1.366,14.03-4.096v-9.749H13.522v-12.872h29.423V330.743z M131.72,340.813\n                h-12.977l-15.29-44.337l-15.299,44.337H75.181l-23.13-68.245H68.02l14.038,45.883l15.195-46.077h12.779l15.195,46.077\n                l14.039-45.883h15.58L131.72,340.813z M221.794,324.256c-1.395,3.81-3.381,6.988-5.956,9.536c-2.585,2.553-5.712,4.455-9.39,5.711\n                c-3.68,1.26-7.777,1.887-12.298,1.887c-9.099,0-16.262-2.517-21.49-7.551c-5.224-5.033-7.839-12.55-7.839-22.554v-38.718h14.905\n                V310.9c0,5.549,1.291,9.729,3.876,12.532c2.575,2.809,6.161,4.217,10.744,4.217c4.579,0,8.161-1.359,10.746-4.07\n                c2.575-2.71,3.868-6.775,3.868-12.194v-38.817h14.912v38.234C223.874,315.965,223.179,320.451,221.794,324.256z\n              "
-    }))));
+      transform: "scale(" + scale + "), translate(79, -528)"
+    }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("use", {
+      href: "#mapmarker"
+    })));
   };
 
   return GWUMarker;
@@ -12139,7 +12225,7 @@ GWUMarker_GWUMarker.propTypes = {
   scale: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.number.isRequired
 };
 GWUMarker_GWUMarker.defaultProps = {
-  scale: 0.1
+  scale: 0.09
 };
 /* harmony default export */ var src_GWUMarker = (GWUMarker_GWUMarker);
 // CONCATENATED MODULE: ./src/ChapterMapComponent.js
@@ -12154,23 +12240,43 @@ function ChapterMapComponent_inheritsLoose(subClass, superClass) { subClass.prot
 
 
 
+
 var smallWorldDataPromise;
 var worldDataPromise;
 
 function getWorldData() {
-  return worldDataPromise = worldDataPromise || fetch(location.pathname + "/dist/world-50m.json").then(function (res) {
+  return worldDataPromise = worldDataPromise || fetch((location.pathname + "/world-50m.json").replace(/\/\//g, "/")).then(function (res) {
     return res.json();
   });
 }
 
 function getSmallWorldData() {
-  return smallWorldDataPromise = smallWorldDataPromise || fetch(location.pathname + "/dist/world-110m.json").then(function (res) {
+  return smallWorldDataPromise = smallWorldDataPromise || fetch((location.pathname + "/world-110m.json").replace(/\/\//g, "/")).then(function (res) {
     return res.json();
   });
 }
 
 var markers = map_data.filter(function (point) {
   return point.chapter;
+}).sort(function (a, b) {
+  // we want to make sure markers lower on the map are painted in front
+  if (a.lat < b.lat) {
+    return 1;
+  }
+
+  if (a.lat > b.lat) {
+    return -1;
+  }
+
+  if (a.lng < b.lng) {
+    return 1;
+  }
+
+  if (a.lng > b.lng) {
+    return -1;
+  }
+
+  return 0;
 }).map(function (point) {
   return {
     name: point.location,
@@ -12229,7 +12335,8 @@ function (_PureComponent) {
         isGeographyIncluded = _this$props.isGeographyIncluded,
         markerScale = _this$props.markerScale,
         style = _this$props.style,
-        className = _this$props.className;
+        className = _this$props.className,
+        forceGrayscale = _this$props.forceGrayscale;
     var worldData = this.state.worldData;
     return external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("div", {
       className: className,
@@ -12247,6 +12354,8 @@ function (_PureComponent) {
         width: "100%",
         height: "auto"
       }
+    }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(src_SvgContentElementWrapperWithDefs, {
+      forceGrayscale: forceGrayscale
     }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(lib["ZoomableGroup"], {
       center: [centerLng, centerLat],
       disablePanning: true
@@ -12254,32 +12363,34 @@ function (_PureComponent) {
       geography: this.state.worldData
     }, function (geographies, projection) {
       return geographies.filter(isGeographyIncluded).map(function (geography, i) {
-        var isHighlighted = map_data.some(function (point) {
+        var matchingPoints = map_data.filter(function (point) {
           return geographyMatchesCountryString(geography, point.country);
         });
+        var hasChapter = matchingPoints.some(function (point) {
+          return point.chapter;
+        });
+        var color = "url(#hardlyredpattern)";
+
+        if (hasChapter) {
+          color = "url(#redpattern)";
+        } else if (matchingPoints.length) {
+          color = "url(#lessredpattern)";
+        }
+
+        var style = {
+          fill: color,
+          stroke: "#222",
+          strokeWidth: 0.5,
+          outline: "none"
+        };
         return external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(lib["Geography"], {
           key: i,
           geography: geography,
           projection: projection,
           style: {
-            default: {
-              fill: isHighlighted ? "#ccc" : "#efefef",
-              stroke: "#333",
-              strokeWidth: 0.3,
-              outline: "none"
-            },
-            hover: {
-              fill: "#607D8B",
-              stroke: "#607D8B",
-              strokeWidth: 0.75,
-              outline: "none"
-            },
-            pressed: {
-              fill: "#FF5722",
-              stroke: "#607D8B",
-              strokeWidth: 0.75,
-              outline: "none"
-            }
+            default: style,
+            hover: style,
+            pressed: style
           }
         });
       });
@@ -12289,7 +12400,7 @@ function (_PureComponent) {
         marker: marker,
         scale: markerScale
       });
-    })))));
+    }))))));
   };
 
   return ChapterMapComponent;
@@ -12302,7 +12413,8 @@ ChapterMapComponent_ChapterMapComponent.propTypes = {
   height: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.number.isRequired,
   scale: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.number.isRequired,
   isGeographyIncluded: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.func.isRequired,
-  markerScale: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.number.isRequired
+  markerScale: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.number.isRequired,
+  forceGrayscale: external_root_PropTypes_commonjs_prop_types_commonjs2_prop_types_amd_prop_types_default.a.bool.isRequired
 };
 ChapterMapComponent_ChapterMapComponent.defaultProps = {
   centerLat: 0,
@@ -12313,7 +12425,8 @@ ChapterMapComponent_ChapterMapComponent.defaultProps = {
   isGeographyIncluded: function isGeographyIncluded() {
     return true;
   },
-  markerScale: 0.1
+  markerScale: 0.09,
+  forceGrayscale: false
 };
 /* harmony default export */ var src_ChapterMapComponent = (ChapterMapComponent_ChapterMapComponent);
 // CONCATENATED MODULE: ./src/index.js
