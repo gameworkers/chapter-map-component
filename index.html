@@ -190,7 +190,7 @@
           bigPngButton.style.position = 'absolute';
           bigPngButton.style.top = '45px';
           bigPngButton.style.left = '10px';
-          bigPngButton.setAttribute('data-export-width', '3000');
+          bigPngButton.setAttribute('data-export-width', '6000');
           function getSvgUrl() {
             var content = mapContainer.querySelector('svg').outerHTML;
             if (content.indexOf('xmlns="http://www.w3.org/2000/svg"') === -1) {
@@ -231,10 +231,13 @@
                 canvas.width,
                 canvas.height
               );
-              a.href = canvas.toDataURL('image/png');
-              a.download = 'Chapter Map ' + (index + 1) + '.png';
-              a.click();
-              window.URL.revokeObjectURL(url);
+              canvas.toBlob(function(blob) {
+                var url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = 'Chapter Map ' + (index + 1) + '.png';
+                a.click();
+                window.URL.revokeObjectURL(url);
+              });
             }
             img.src = url;
           };
