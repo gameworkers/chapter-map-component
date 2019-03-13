@@ -185,12 +185,18 @@
           pngButton.style.position = 'absolute';
           pngButton.style.top = '25px';
           pngButton.style.left = '10px';
+          var bigPngButton = document.createElement('button');
+          bigPngButton.textContent = 'Save giant PNG (for print)';
+          bigPngButton.style.position = 'absolute';
+          bigPngButton.style.top = '45px';
+          bigPngButton.style.left = '10px';
+          bigPngButton.setAttribute('data-export-width', '3000');
           function getSvgUrl() {
             var content = mapContainer.querySelector('svg').outerHTML;
             if (content.indexOf('xmlns="http://www.w3.org/2000/svg"') === -1) {
               content = content
                 // make sure it's a valid SVG file format!
-                .replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+                .replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"');
             }
             var blob = new Blob([content], { type: 'image/svg+xml' });
             return URL.createObjectURL(blob);
@@ -202,13 +208,29 @@
             a.click();
             window.URL.revokeObjectURL(url);
           };
-          pngButton.onclick = function() {
+          function onRequestPng(e) {
             var url = getSvgUrl();
             var img = new Image();
+            var exportWidth = Number(e.target.getAttribute('data-export-width'));
             img.onload = function() {
-              canvas.width = img.width;
-              canvas.height = img.height;  
-              ctx.drawImage(img, 0, 0);
+              if (exportWidth) {
+                canvas.width = exportWidth;
+                canvas.height = exportWidth * img.height / img.width;
+              } else {
+                canvas.width = img.width;
+                canvas.height = img.height;
+              }
+              ctx.drawImage(
+                img,
+                0,
+                0,
+                img.width,
+                img.height,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              );
               a.href = canvas.toDataURL('image/png');
               a.download = 'Chapter Map ' + (index + 1) + '.png';
               a.click();
@@ -216,11 +238,14 @@
             }
             img.src = url;
           };
+          pngButton.onclick = onRequestPng;
+          bigPngButton.onclick = onRequestPng;
           var containerDiv = document.createElement('div');
           containerDiv.style.position = 'relative';
           containerDiv.style.height = 0;
           containerDiv.appendChild(svgButton);
           containerDiv.appendChild(pngButton);
+          containerDiv.appendChild(bigPngButton);
           mapContainer.appendChild(containerDiv);
         }
       );
