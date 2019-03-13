@@ -120,23 +120,16 @@ class ChapterMapComponent extends PureComponent {
                     geographies
                       .filter(isGeographyIncluded)
                       .map((geography, i) => {
-                        const matchingPoints = mapPoints.filter(point => {
+                        const hasMatchingPoint = mapPoints.some(point => {
                           return geographyMatchesCountryString(
                             geography,
                             point.country
                           );
                         });
-                        const hasChapter = matchingPoints.some(point => {
-                          return point.chapter;
-                        });
-                        let color = "url(#hardlyredpattern)";
-                        if (hasChapter) {
-                          color = "url(#redpattern)";
-                        } else if (matchingPoints.length) {
-                          color = "url(#lessredpattern)";
-                        }
                         const style = {
-                          fill: color,
+                          fill: hasMatchingPoint
+                            ? "url(#redpattern)"
+                            : "url(#hardlyredpattern)",
                           stroke: "#222",
                           strokeWidth: 0.5,
                           outline: "none"
