@@ -11843,9 +11843,9 @@ var lib = __webpack_require__(4);
   country: "Germany",
   chapter: true
 }, {
-  location: "GWU UK",
-  lat: 55.378051,
-  lng: -3.435973,
+  location: "UK",
+  lat: 53.414323,
+  lng: -2.294885,
   country: "United Kingdom",
   chapter: true
 }, {
@@ -11904,8 +11904,8 @@ var lib = __webpack_require__(4);
   chapter: true
 }, {
   location: "Sweden",
-  lat: 60.128161,
-  lng: 18.643501,
+  lat: 61.889081,
+  lng: 15.457691,
   country: "Sweden",
   chapter: true
 }, {
@@ -12012,8 +12012,8 @@ var lib = __webpack_require__(4);
   chapter: false
 }, {
   location: "Ireland",
-  lat: 53.349805,
-  lng: -6.26031,
+  lat: 53.142367,
+  lng: -7.692054,
   country: "Ireland",
   chapter: true
 }, {
