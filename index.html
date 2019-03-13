@@ -108,6 +108,23 @@
               CodeExampleWrapper,
               {},
               React.createElement(ChapterMapComponent, {
+                centerLat: 35,
+                centerLng: -90,
+                width: 600,
+                height: 300,
+                scale: 400,
+                isGeographyIncluded: function (geography) {
+                  return geography.properties.REGION_UN === 'Americas';
+                },
+                markerScale: 0.04,
+                className: 'chapter_map',
+                forceGrayscale
+              }),
+            ),
+            React.createElement(
+              CodeExampleWrapper,
+              {},
+              React.createElement(ChapterMapComponent, {
                 centerLat: 20,
                 centerLng: -90,
                 width: 600,
@@ -143,7 +160,7 @@
               React.createElement(ChapterMapComponent, {
                 centerLat: -1,
                 centerLng: 120,
-                width: 735,
+                width: 1180,
                 height: 742,
                 scale: 490,
                 isGeographyIncluded: function(geography) {
