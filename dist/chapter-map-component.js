@@ -12364,22 +12364,11 @@ function (_PureComponent) {
       geography: this.state.worldData
     }, function (geographies, projection) {
       return geographies.filter(isGeographyIncluded).map(function (geography, i) {
-        var matchingPoints = map_data.filter(function (point) {
+        var hasMatchingPoint = map_data.some(function (point) {
           return geographyMatchesCountryString(geography, point.country);
         });
-        var hasChapter = matchingPoints.some(function (point) {
-          return point.chapter;
-        });
-        var color = "url(#hardlyredpattern)";
-
-        if (hasChapter) {
-          color = "url(#redpattern)";
-        } else if (matchingPoints.length) {
-          color = "url(#lessredpattern)";
-        }
-
         var style = {
-          fill: color,
+          fill: hasMatchingPoint ? "url(#redpattern)" : "url(#hardlyredpattern)",
           stroke: "#222",
           strokeWidth: 0.5,
           outline: "none"
