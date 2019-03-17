@@ -8,7 +8,7 @@ const fileName = 'chapter-map-component';
 const libraryName = 'ChapterMapComponent';
 
 function webpackConfig({ minimize }) {
-  return {
+  const config = {
     mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
     entry: {
       [minimize ? `${fileName}.min` : fileName]: './src/index.js'
@@ -60,9 +60,20 @@ function webpackConfig({ minimize }) {
       minimize
     }
   };
+  if (!process.env.WEBPACK_SERVE) {
+    config.externals['react-simple-maps'] = {
+      root: 'ReactSimpleMaps',
+      commonjs: 'react-simple-maps',
+      commonjs2: 'react-simple-maps',
+      amd: 'react-simple-maps'
+    };
+  }
+  return config;
 }
 
-module.exports = [
-  webpackConfig({ minimize: true}),
-  webpackConfig({ minimize: false })
-];
+module.exports = process.env.BUILD_MODE === 'unminimized'
+  ? [webpackConfig({ minimize: false })]
+  : [
+    webpackConfig({ minimize: true}),
+    webpackConfig({ minimize: false })
+  ];
