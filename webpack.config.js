@@ -67,6 +67,30 @@ function webpackConfig({ minimize }) {
       commonjs2: 'react-simple-maps',
       amd: 'react-simple-maps'
     };
+    config.externals['redux'] = {
+      root: 'Redux',
+      commonjs: 'redux',
+      commonjs2: 'redux',
+      amd: 'redux'
+    };
+    config.externals['next-redux-wrapper'] = {
+      root: 'NextReduxWrapper',
+      commonjs: 'next-redux-wrapper',
+      commonjs2: 'next-redux-wrapper',
+      amd: 'next-redux-wrapper'
+    };
+    config.externals['redux-tooltip'] = {
+      root: 'ReduxTooltip',
+      commonjs: 'redux-tooltip',
+      commonjs2: 'redux-tooltip',
+      amd: 'redux-tooltip'
+    };
+    config.externals['react-redux'] = {
+      root: 'ReactRedux',
+      commonjs: 'react-redux',
+      commonjs2: 'react-redux',
+      amd: 'react-redux'
+    };
   }
   return config;
 }

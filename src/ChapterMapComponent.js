@@ -7,11 +7,23 @@ import {
   Geography,
   Markers
 } from "react-simple-maps";
+import withRedux from "next-redux-wrapper"
+import { Tooltip, actions } from "redux-tooltip"
+
+React.PropTypes = PropTypes; // for redux-tooltip compatibility
+
+const wrapperStyles = {
+  width: "100%",
+  maxWidth: 980,
+  margin: "0 auto",
+  fontFamily: "Roboto, sans-serif",
+}
 
 import mapPoints from "./map_data";
 
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
 import GWUMarker from "./GWUMarker";
+import { initStore } from "./tooltipStore";
 
 let smallWorldDataPromise;
 let worldDataPromise;
@@ -74,6 +86,8 @@ class ChapterMapComponent extends PureComponent {
     this.state = {
       worldData: null
     };
+    this.handleMove = this.handleMove.bind(this)
+    this.handleLeave = this.handleLeave.bind(this)
   }
 
   componentDidMount() {
@@ -97,6 +111,21 @@ class ChapterMapComponent extends PureComponent {
     });
   }
 
+  handleMove(geography, evt) {
+    const x = evt.clientX
+    const y = evt.clientY + window.pageYOffset
+    this.props.dispatch(
+      actions.show({
+        origin: { x, y },
+        content: geography.properties.NAME_LONG,
+      })
+    )
+  }
+
+  handleLeave() {
+    this.props.dispatch(actions.hide())
+  }
+
   render() {
     const {
       centerLat,
@@ -115,62 +144,67 @@ class ChapterMapComponent extends PureComponent {
       <div className={className} style={{ ...(style || {}), width, height }}>
         {!worldData && <div>Loading...</div>}
         {worldData && (
-          <ComposableMap
-            projectionConfig={{ scale: scale }}
-            width={width}
-            height={height}
-            style={{ width: "100%", height: "auto", backgroundColor: '#fff' }}
-          >
-            <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
-              <ZoomableGroup center={[centerLng, centerLat]} disablePanning>
-                <Geographies geography={this.state.worldData}>
-                  {(geographies, projection) =>
-                    geographies
-                      .filter(isGeographyIncluded)
-                      .map((geography, i) => {
-                        const hasMatchingPoint = mapPoints.some(point => {
-                          return geographyMatchesCountryString(
-                            geography,
-                            point.country
+          <React.Fragment>
+            <ComposableMap
+              projectionConfig={{ scale: scale }}
+              width={width}
+              height={height}
+              style={{ width: "100%", height: "auto", backgroundColor: '#fff' }}
+            >
+              <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
+                <ZoomableGroup center={[centerLng, centerLat]} disablePanning>
+                  <Geographies geography={this.state.worldData}>
+                    {(geographies, projection) =>
+                      geographies
+                        .filter(isGeographyIncluded)
+                        .map((geography, i) => {
+                          const hasMatchingPoint = mapPoints.some(point => {
+                            return geographyMatchesCountryString(
+                              geography,
+                              point.country
+                            );
+                          });
+                          const style = {
+                            fill: hasMatchingPoint
+                              ? "url(#redpattern)"
+                              : "url(#hardlyredpattern)",
+                            stroke: "#222",
+                            strokeWidth: 0.5,
+                            outline: "none"
+                          };
+                          return (
+                            <Geography
+                              key={i}
+                              geography={geography}
+                              projection={projection}
+                              style={{
+                                default: style,
+                                hover: style,
+                                pressed: style
+                              }}
+                              onMouseMove={hasMatchingPoint && this.handleMove}
+                              onMouseLeave={hasMatchingPoint && this.handleLeave}
+                            />
                           );
-                        });
-                        const style = {
-                          fill: hasMatchingPoint
-                            ? "url(#redpattern)"
-                            : "url(#hardlyredpattern)",
-                          stroke: "#222",
-                          strokeWidth: 0.5,
-                          outline: "none"
-                        };
-                        return (
-                          <Geography
-                            key={i}
-                            geography={geography}
-                            projection={projection}
-                            style={{
-                              default: style,
-                              hover: style,
-                              pressed: style
-                            }}
-                          />
-                        );
-                      })
-                  }
-                </Geographies>
-                <Markers>
-                  {markers.map(marker => {
-                    return (
-                      <GWUMarker
-                        key={marker.name}
-                        marker={marker}
-                        scale={markerScale}
-                      />
-                    );
-                  })}
-                </Markers>
-              </ZoomableGroup>
-            </SvgContentElementWrapperWithDefs>
-          </ComposableMap>
+                        })
+                    }
+                  </Geographies>
+                  <Markers>
+                    {markers.map(marker => {
+                      return (
+                        <GWUMarker
+                          key={marker.name}
+                          marker={marker}
+                          scale={markerScale}
+                        />
+                      );
+                    })}
+                  </Markers>
+                </ZoomableGroup>
+              </SvgContentElementWrapperWithDefs>
+            </ComposableMap>
+            <Tooltip />
+          </React.Fragment>
         )}
       </div>
     );
@@ -199,4 +233,4 @@ ChapterMapComponent.defaultProps = {
   forceGrayscale: false
 };
 
-export default ChapterMapComponent;
+export default withRedux(initStore)(ChapterMapComponent);

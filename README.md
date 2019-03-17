@@ -11,8 +11,8 @@ npm install --save @gameworkers/chapter-map-component
 ```js
 import ChapterMapComponent from '@gameworkers/chapter-map-component';
 
-window.WORLD_110M_JSON_PATH = location.pathname + 'dist/world-100m.json';
-window.WORLD_50M_JSON_PATH = location.pathname + 'dist/world-50m.json';
+window.WORLD_110M_JSON_PATH = '/world-100m.json';
+window.WORLD_50M_JSON_PATH = '/world-50m.json';
 
 // later...
 
