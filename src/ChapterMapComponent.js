@@ -7,8 +7,8 @@ import {
   Geography,
   Markers
 } from "react-simple-maps";
-import withRedux from "next-redux-wrapper"
-import { Tooltip, actions } from "redux-tooltip"
+import withRedux from "next-redux-wrapper";
+import { Tooltip, actions } from "redux-tooltip";
 
 React.PropTypes = PropTypes; // for redux-tooltip compatibility
 
@@ -16,8 +16,8 @@ const wrapperStyles = {
   width: "100%",
   maxWidth: 980,
   margin: "0 auto",
-  fontFamily: "Roboto, sans-serif",
-}
+  fontFamily: "Roboto, sans-serif"
+};
 
 import mapPoints from "./map_data";
 
@@ -29,15 +29,11 @@ let smallWorldDataPromise;
 let worldDataPromise;
 function getWorldData(pathname) {
   return (worldDataPromise =
-    worldDataPromise ||
-    fetch(pathname).then(res => res.json())
-  );
+    worldDataPromise || fetch(pathname).then(res => res.json()));
 }
 function getSmallWorldData(pathname) {
   return (smallWorldDataPromise =
-    smallWorldDataPromise ||
-    fetch(pathname).then(res => res.json())
-  );
+    smallWorldDataPromise || fetch(pathname).then(res => res.json()));
 }
 
 const markers = mapPoints
@@ -88,18 +84,18 @@ class ChapterMapComponent extends PureComponent {
       worldData: null
     };
     this.focusedMarker = null;
-    this.handleCountryMove = this.handleCountryMove.bind(this)
-    this.handleCountryLeave = this.handleCountryLeave.bind(this)
-    this.handleMarkerMove = this.handleMarkerMove.bind(this)
-    this.handleMarkerLeave = this.handleMarkerLeave.bind(this)
+    this.handleCountryMove = this.handleCountryMove.bind(this);
+    this.handleCountryLeave = this.handleCountryLeave.bind(this);
+    this.handleMarkerMove = this.handleMarkerMove.bind(this);
+    this.handleMarkerLeave = this.handleMarkerLeave.bind(this);
     this.handleMarkerClick = this.handleMarkerClick.bind(this);
     this.handleOutsideMarkerClick = this.handleOutsideMarkerClick.bind(this);
   }
 
   componentDidMount() {
     if (
-      typeof WORLD_110M_JSON_PATH === 'undefined' ||
-      typeof WORLD_50M_JSON_PATH === 'undefined'
+      typeof WORLD_110M_JSON_PATH === "undefined" ||
+      typeof WORLD_50M_JSON_PATH === "undefined"
     ) {
       throw new Error(`
         WORLD_110M_JSON_PATH and WORLD_50M_JSON_PATH must be defined
@@ -116,11 +112,11 @@ class ChapterMapComponent extends PureComponent {
       this.setState(state => (state.worldData ? null : { worldData }));
     });
 
-    window.addEventListener('click', this.handleOutsideMarkerClick)
+    window.addEventListener("click", this.handleOutsideMarkerClick);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('click', this.handleOutsideMarkerClick)
+    window.removeEventListener("click", this.handleOutsideMarkerClick);
   }
 
   handleCountryMove(geography, evt) {
@@ -156,7 +152,9 @@ class ChapterMapComponent extends PureComponent {
     evt.nativeEvent.stopImmediatePropagation();
     this.focusedMarker = this.focusedMarker === marker ? null : marker;
     if (this.focusedMarker) {
-      const { data: { location, chapterInfo } } = marker;
+      const {
+        data: { location, chapterInfo }
+      } = marker;
       let content = location;
       if (chapterInfo) {
         const {
@@ -171,7 +169,7 @@ class ChapterMapComponent extends PureComponent {
           content += `<p>${description}</p>`;
         }
         if (twitter || email || website) {
-          content += '<p>';
+          content += "<p>";
         }
         if (twitter) {
           content += `
@@ -195,9 +193,7 @@ class ChapterMapComponent extends PureComponent {
           content += `
             <strong>Website:</strong>
             <a href="${
-              website.indexOf('http') === 0
-                ? ''
-                : 'http://'
+              website.indexOf("http") === 0 ? "" : "http://"
             }${website}">
               ${website}
             </a>
@@ -205,7 +201,7 @@ class ChapterMapComponent extends PureComponent {
           `;
         }
         if (twitter || email || website) {
-          content += '</p>';
+          content += "</p>";
         }
         if (applicationLink) {
           content += `
@@ -216,9 +212,11 @@ class ChapterMapComponent extends PureComponent {
             </p>
           `;
         }
-        content = `<div class="${this.props.tooltipClassName}">${content}</div>`;
+        content = `<div class="${
+          this.props.tooltipClassName
+        }">${content}</div>`;
       }
-      this.dispatchTooltip(evt, content)
+      this.dispatchTooltip(evt, content);
     } else {
       this.hideTooltip();
     }
@@ -229,18 +227,18 @@ class ChapterMapComponent extends PureComponent {
   }
 
   dispatchTooltip(evt, content) {
-    const x = evt.clientX
-    const y = evt.clientY + window.pageYOffset
+    const x = evt.clientX;
+    const y = evt.clientY + window.pageYOffset;
     this.props.dispatch(
       actions.show({
         origin: { x, y },
         content
       })
-    )
+    );
   }
 
   hideTooltip() {
-    this.props.dispatch(actions.hide())
+    this.props.dispatch(actions.hide());
     Promise.resolve().then(() => {
       this.focusedMarker = null;
     });
@@ -263,10 +261,7 @@ class ChapterMapComponent extends PureComponent {
     } = this.props;
     const { worldData } = this.state;
     return (
-      <div
-        className={className}
-        style={{ ...(style || {}), width, height }}
-      >
+      <div className={className} style={{ ...(style || {}), width, height }}>
         {!worldData && <div>Loading...</div>}
         {worldData && (
           <React.Fragment>
@@ -274,7 +269,7 @@ class ChapterMapComponent extends PureComponent {
               projectionConfig={{ scale: scale }}
               width={width}
               height={height}
-              style={{ width: "100%", height: "auto", backgroundColor: '#fff' }}
+              style={{ width: "100%", height: "auto", backgroundColor: "#fff" }}
             >
               <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
                 <ZoomableGroup
@@ -311,8 +306,12 @@ class ChapterMapComponent extends PureComponent {
                                 hover: style,
                                 pressed: style
                               }}
-                              onMouseMove={hasMatchingPoint && this.handleCountryMove}
-                              onMouseLeave={hasMatchingPoint && this.handleCountryLeave}
+                              onMouseMove={
+                                hasMatchingPoint && this.handleCountryMove
+                              }
+                              onMouseLeave={
+                                hasMatchingPoint && this.handleCountryLeave
+                              }
                             />
                           );
                         })
@@ -344,7 +343,7 @@ class ChapterMapComponent extends PureComponent {
 }
 
 ChapterMapComponent = withRedux(initStore)(ChapterMapComponent);
-ChapterMapComponent.displayName = 'ChapterMapComponent';
+ChapterMapComponent.displayName = "ChapterMapComponent";
 
 ChapterMapComponent.propTypes = {
   centerLat: PropTypes.number.isRequired,
@@ -369,7 +368,7 @@ ChapterMapComponent.defaultProps = {
   isGeographyIncluded: () => true,
   markerScale: 0.09,
   forceGrayscale: false,
-  tooltipClassName: 'gwu_chapter_tooltip',
+  tooltipClassName: "gwu_chapter_tooltip",
   zoom: 1,
   enablePanning: false
 };

@@ -8,9 +8,9 @@ class GWUMarker extends PureComponent {
     return (
       <Marker key={marker.name} marker={marker} {...rest}>
         <g
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
           transform={`scale(${scale}), translate(79, -528)`}
-         >
+        >
           <use href="#mapmarker" />
         </g>
       </Marker>
