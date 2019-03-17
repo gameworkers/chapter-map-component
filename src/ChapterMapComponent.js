@@ -257,7 +257,8 @@ class ChapterMapComponent extends PureComponent {
       className,
       forceGrayscale,
       zoom,
-      enablePanning
+      enablePanning,
+      projection
     } = this.props;
     const { worldData } = this.state;
     return (
@@ -266,6 +267,7 @@ class ChapterMapComponent extends PureComponent {
         {worldData && (
           <React.Fragment>
             <ComposableMap
+              projection={projection}
               projectionConfig={{ scale: scale }}
               width={width}
               height={height}
@@ -356,7 +358,8 @@ ChapterMapComponent.propTypes = {
   forceGrayscale: PropTypes.bool.isRequired,
   tooltipClassName: PropTypes.string.isRequired,
   zoom: PropTypes.number.isRequired,
-  enablePanning: PropTypes.bool.isRequired
+  enablePanning: PropTypes.bool.isRequired,
+  projection: PropTypes.string
 };
 
 ChapterMapComponent.defaultProps = {
@@ -370,7 +373,8 @@ ChapterMapComponent.defaultProps = {
   forceGrayscale: false,
   tooltipClassName: "gwu_chapter_tooltip",
   zoom: 1,
-  enablePanning: false
+  enablePanning: false,
+  projection: "times"
 };
 
 export default ChapterMapComponent;
