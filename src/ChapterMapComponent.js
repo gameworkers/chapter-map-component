@@ -257,11 +257,16 @@ class ChapterMapComponent extends PureComponent {
       markerScale,
       style,
       className,
-      forceGrayscale
+      forceGrayscale,
+      zoom,
+      enablePanning
     } = this.props;
     const { worldData } = this.state;
     return (
-      <div className={className} style={{ ...(style || {}), width, height }}>
+      <div
+        className={className}
+        style={{ ...(style || {}), width, height }}
+      >
         {!worldData && <div>Loading...</div>}
         {worldData && (
           <React.Fragment>
@@ -272,7 +277,11 @@ class ChapterMapComponent extends PureComponent {
               style={{ width: "100%", height: "auto", backgroundColor: '#fff' }}
             >
               <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
-                <ZoomableGroup center={[centerLng, centerLat]} disablePanning>
+                <ZoomableGroup
+                  center={[centerLng, centerLat]}
+                  disablePanning={!enablePanning}
+                  zoom={zoom}
+                >
                   <Geographies geography={this.state.worldData}>
                     {(geographies, projection) =>
                       geographies
@@ -289,7 +298,7 @@ class ChapterMapComponent extends PureComponent {
                               ? "url(#redpattern)"
                               : "url(#hardlyredpattern)",
                             stroke: "#222",
-                            strokeWidth: 0.5,
+                            strokeWidth: 0.5 / zoom,
                             outline: "none"
                           };
                           return (
@@ -346,7 +355,9 @@ ChapterMapComponent.propTypes = {
   isGeographyIncluded: PropTypes.func.isRequired,
   markerScale: PropTypes.number.isRequired,
   forceGrayscale: PropTypes.bool.isRequired,
-  tooltipClassName: PropTypes.string.isRequired
+  tooltipClassName: PropTypes.string.isRequired,
+  zoom: PropTypes.number.isRequired,
+  enablePanning: PropTypes.bool.isRequired
 };
 
 ChapterMapComponent.defaultProps = {
@@ -358,7 +369,9 @@ ChapterMapComponent.defaultProps = {
   isGeographyIncluded: () => true,
   markerScale: 0.09,
   forceGrayscale: false,
-  tooltipClassName: 'gwu_chapter_tooltip'
+  tooltipClassName: 'gwu_chapter_tooltip',
+  zoom: 1,
+  enablePanning: false
 };
 
 export default ChapterMapComponent;
