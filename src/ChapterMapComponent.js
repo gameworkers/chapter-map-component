@@ -15,19 +15,17 @@ import GWUMarker from "./GWUMarker";
 
 let smallWorldDataPromise;
 let worldDataPromise;
-function getWorldData() {
+function getWorldData(pathname) {
   return (worldDataPromise =
     worldDataPromise ||
-    fetch(location.pathname + "dist/world-50m.json").then(
-      res => res.json()
-    ));
+    fetch(pathname).then(res => res.json())
+  );
 }
-function getSmallWorldData() {
+function getSmallWorldData(pathname) {
   return (smallWorldDataPromise =
     smallWorldDataPromise ||
-    fetch(location.pathname + "dist/world-110m.json").then(
-      res => res.json()
-    ));
+    fetch(pathname).then(res => res.json())
+  );
 }
 
 const markers = mapPoints
@@ -79,12 +77,22 @@ class ChapterMapComponent extends PureComponent {
   }
 
   componentDidMount() {
-    getWorldData().then(worldData => {
+    if (
+      typeof WORLD_110M_JSON_PATH === 'undefined' ||
+      typeof WORLD_50M_JSON_PATH === 'undefined'
+    ) {
+      throw new Error(`
+        WORLD_110M_JSON_PATH and WORLD_50M_JSON_PATH must be defined
+        in the global scope.
+      `);
+    }
+
+    getWorldData(WORLD_50M_JSON_PATH).then(worldData => {
       this.setState({
         worldData
       });
     });
-    getSmallWorldData().then(worldData => {
+    getSmallWorldData(WORLD_110M_JSON_PATH).then(worldData => {
       this.setState(state => (state.worldData ? null : { worldData }));
     });
   }

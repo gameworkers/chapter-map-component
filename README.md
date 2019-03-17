@@ -11,6 +11,9 @@ npm install --save @gameworkers/chapter-map-component
 ```js
 import ChapterMapComponent from '@gameworkers/chapter-map-component';
 
+window.WORLD_110M_JSON_PATH = location.pathname + 'dist/world-100m.json';
+window.WORLD_50M_JSON_PATH = location.pathname + 'dist/world-50m.json';
+
 // later...
 
 <ChapterMapComponent
@@ -28,7 +31,7 @@ import ChapterMapComponent from '@gameworkers/chapter-map-component';
 />
 ```
 
-`ChapterMapComponent` expects [`world-100m.json`](/src/world-110m.json) and [`world-50m.json`](/src/world-50m.json) to be found in the same public directory as your JavaScript bundle - the map will fail to load properly otherwise.
+`ChapterMapComponent` expects [`world-110m.json`](/src/world-110m.json) and [`world-50m.json`](/src/world-50m.json) to be served from your application's web server, and paths declared in the global scope on the client side via `WORLD_110M_JSON_PATH` and `WORLD_50M_JSON_PATH`.
 
 All props are optional and have the following default values if nothing is specified:
 

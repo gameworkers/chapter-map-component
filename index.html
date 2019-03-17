@@ -38,6 +38,8 @@
 
     <script src="dist/chapter-map-component.js"></script>
     <script>
+      window.WORLD_110M_JSON_PATH = location.pathname + 'dist/world-110m.json';
+      window.WORLD_50M_JSON_PATH = location.pathname + 'dist/world-50m.json';
       function CodeExampleWrapper({ children }) {
         const componentName = typeof children.type === 'string'
           ? children.type
