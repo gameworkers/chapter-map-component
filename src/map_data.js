@@ -174,7 +174,7 @@ export default [
     country: "United Kingdom",
     chapter: true,
     chapterInfo: {
-      description: 'National Game Workers Unite union of the United Kingdom. A branch of [IWGB](https://iwgb.org.uk/).',
+      description: 'National Game Workers Unite union of the United Kingdom. A branch of <a href="https://iwgb.org.uk/">IWGB</a>.',
       applicationLink: 'https://iwgb.org.uk/join/gwu',
       twitter: 'GWU_UK',
       email: 'contact@gwu-uk.org',
