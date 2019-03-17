@@ -61,7 +61,8 @@ const markers = mapPoints
   .map(point => {
     return {
       name: point.location,
-      coordinates: [point.lng, point.lat]
+      coordinates: [point.lng, point.lat],
+      data: point
     };
   });
 
@@ -86,8 +87,13 @@ class ChapterMapComponent extends PureComponent {
     this.state = {
       worldData: null
     };
-    this.handleMove = this.handleMove.bind(this)
-    this.handleLeave = this.handleLeave.bind(this)
+    this.focusedMarker = null;
+    this.handleCountryMove = this.handleCountryMove.bind(this)
+    this.handleCountryLeave = this.handleCountryLeave.bind(this)
+    this.handleMarkerMove = this.handleMarkerMove.bind(this)
+    this.handleMarkerLeave = this.handleMarkerLeave.bind(this)
+    this.handleMarkerClick = this.handleMarkerClick.bind(this);
+    this.handleOutsideMarkerClick = this.handleOutsideMarkerClick.bind(this);
   }
 
   componentDidMount() {
@@ -109,21 +115,135 @@ class ChapterMapComponent extends PureComponent {
     getSmallWorldData(WORLD_110M_JSON_PATH).then(worldData => {
       this.setState(state => (state.worldData ? null : { worldData }));
     });
+
+    window.addEventListener('click', this.handleOutsideMarkerClick)
   }
 
-  handleMove(geography, evt) {
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleOutsideMarkerClick)
+  }
+
+  handleCountryMove(geography, evt) {
+    if (this.focusedMarker) {
+      return;
+    }
+    this.dispatchTooltip(evt, geography.properties.NAME_LONG);
+  }
+
+  handleCountryLeave() {
+    if (this.focusedMarker) {
+      return;
+    }
+    this.hideTooltip();
+  }
+
+  handleMarkerMove(marker, evt) {
+    if (this.focusedMarker) {
+      return;
+    }
+    this.dispatchTooltip(evt, marker.name);
+  }
+
+  handleMarkerLeave() {
+    if (this.focusedMarker) {
+      return;
+    }
+    this.hideTooltip();
+  }
+
+  handleMarkerClick(marker, coords, evt) {
+    evt.stopPropagation();
+    evt.nativeEvent.stopImmediatePropagation();
+    this.focusedMarker = this.focusedMarker === marker ? null : marker;
+    if (this.focusedMarker) {
+      const { data: { location, chapterInfo } } = marker;
+      let content = location;
+      if (chapterInfo) {
+        const {
+          description,
+          applicationLink,
+          twitter,
+          email,
+          website
+        } = chapterInfo;
+        content = `<h3>${location}</h3>`;
+        if (description) {
+          content += `<p>${description}</p>`;
+        }
+        if (twitter || email || website) {
+          content += '<p>';
+        }
+        if (twitter) {
+          content += `
+            <strong>Twitter:</strong>
+            <a href="https://twitter.com/${twitter}">
+              @${twitter}
+            </a>
+            <br />
+          `;
+        }
+        if (email) {
+          content += `
+            <strong>Email:</strong>
+            <a href="mailto:${email}">
+              ${email}
+            </a>
+            <br />
+          `;
+        }
+        if (website) {
+          content += `
+            <strong>Website:</strong>
+            <a href="${
+              website.indexOf('http') === 0
+                ? ''
+                : 'http://'
+            }${website}">
+              ${website}
+            </a>
+            <br />
+          `;
+        }
+        if (twitter || email || website) {
+          content += '</p>';
+        }
+        if (applicationLink) {
+          content += `
+            <p>
+              <a href="${applicationLink}">
+                Apply here!
+              </a>
+            </p>
+          `;
+        }
+        content = `<div class="${this.props.tooltipClassName}">${content}</div>`;
+      }
+      this.dispatchTooltip(evt, content)
+    } else {
+      this.hideTooltip();
+    }
+  }
+
+  handleOutsideMarkerClick() {
+    this.hideTooltip();
+  }
+
+  dispatchTooltip(evt, content) {
     const x = evt.clientX
     const y = evt.clientY + window.pageYOffset
     this.props.dispatch(
       actions.show({
         origin: { x, y },
-        content: geography.properties.NAME_LONG,
+        content
       })
     )
   }
 
-  handleLeave() {
+  hideTooltip() {
     this.props.dispatch(actions.hide())
+    Promise.resolve().then(() => {
+      this.focusedMarker = null;
+    });
   }
 
   render() {
@@ -182,8 +302,8 @@ class ChapterMapComponent extends PureComponent {
                                 hover: style,
                                 pressed: style
                               }}
-                              onMouseMove={hasMatchingPoint && this.handleMove}
-                              onMouseLeave={hasMatchingPoint && this.handleLeave}
+                              onMouseMove={hasMatchingPoint && this.handleCountryMove}
+                              onMouseLeave={hasMatchingPoint && this.handleCountryLeave}
                             />
                           );
                         })
@@ -196,6 +316,9 @@ class ChapterMapComponent extends PureComponent {
                           key={marker.name}
                           marker={marker}
                           scale={markerScale}
+                          onClick={this.handleMarkerClick}
+                          onMouseMove={this.handleMarkerMove}
+                          onMouseLeave={this.handleMarkerLeave}
                         />
                       );
                     })}
@@ -211,6 +334,9 @@ class ChapterMapComponent extends PureComponent {
   }
 }
 
+ChapterMapComponent = withRedux(initStore)(ChapterMapComponent);
+ChapterMapComponent.displayName = 'ChapterMapComponent';
+
 ChapterMapComponent.propTypes = {
   centerLat: PropTypes.number.isRequired,
   centerLng: PropTypes.number.isRequired,
@@ -219,7 +345,8 @@ ChapterMapComponent.propTypes = {
   scale: PropTypes.number.isRequired,
   isGeographyIncluded: PropTypes.func.isRequired,
   markerScale: PropTypes.number.isRequired,
-  forceGrayscale: PropTypes.bool.isRequired
+  forceGrayscale: PropTypes.bool.isRequired,
+  tooltipClassName: PropTypes.string.isRequired
 };
 
 ChapterMapComponent.defaultProps = {
@@ -230,7 +357,8 @@ ChapterMapComponent.defaultProps = {
   scale: 205,
   isGeographyIncluded: () => true,
   markerScale: 0.09,
-  forceGrayscale: false
+  forceGrayscale: false,
+  tooltipClassName: 'gwu_chapter_tooltip'
 };
 
-export default withRedux(initStore)(ChapterMapComponent);
+export default ChapterMapComponent;

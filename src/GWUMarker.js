@@ -7,7 +7,10 @@ class GWUMarker extends PureComponent {
     const { marker, scale, ...rest } = this.props;
     return (
       <Marker key={marker.name} marker={marker} {...rest}>
-        <g transform={`scale(${scale}), translate(79, -528)`}>
+        <g
+          style={{ cursor: 'pointer' }}
+          transform={`scale(${scale}), translate(79, -528)`}
+         >
           <use href="#mapmarker" />
         </g>
       </Marker>

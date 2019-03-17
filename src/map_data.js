@@ -274,9 +274,9 @@ export default [
     chapterInfo: {
       description: 'The video game workers\' union in France.',
       applicationLink: 'https://www.stjv.fr/en/membership/',
-      twitter: 'STVJ_fr',
+      twitter: 'STJV_fr',
       email: 'Contact@STJV.fr',
-      website: 'STVJ.fr/en'
+      website: 'STJV.fr/en'
     }
   },
   {
@@ -583,7 +583,7 @@ export default [
       description: 'The local national Argentina chapter of Game Workers Unite.',
       applicationLink: '',
       twitter: '',
-      email: '',
+      email: 'gwuargentina@gmail.com',
       website: ''
     }
   },
