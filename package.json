@@ -2,7 +2,7 @@
   "name": "@gameworkers/chapter-map-component",
   "version": "0.2.0",
   "description": "React component for showing chapter distribution for Game Workers Unite",
-  "main": "dist/game-workers-chapter-map-component.js",
+  "main": "dist/chapter-map-component.js",
   "scripts": {
     "build:clean": "rimraf dist",
     "build:webpack": "webpack --progress",
