@@ -52,7 +52,7 @@
     "next-redux-wrapper": "^1.3.2",
     "prop-types": "^15.7.2",
     "react-redux": "^5.0.6",
-    "react-simple-maps": "github:gameworkers/react-simple-maps#touch-panning",
+    "react-simple-maps": "github:gameworkers/react-simple-maps#b00a41f70db26bdb142e106304ab1a56380368a4",
     "redux": "^3.7.2",
     "redux-tooltip": "^0.7.2"
   },
