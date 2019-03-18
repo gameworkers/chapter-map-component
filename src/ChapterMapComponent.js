@@ -6,7 +6,7 @@ import {
   Geographies,
   Geography,
   Markers
-} from "react-simple-maps";
+} from "@gameworkers/react-simple-maps";
 import withRedux from "next-redux-wrapper";
 import { Tooltip, actions } from "redux-tooltip";
 

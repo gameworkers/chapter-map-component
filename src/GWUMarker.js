@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { Marker } from "react-simple-maps";
+import { Marker } from "@gameworkers/react-simple-maps";
 
 class GWUMarker extends PureComponent {
   render() {

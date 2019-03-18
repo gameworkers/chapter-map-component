@@ -57,11 +57,11 @@ function webpackConfig({ minimize }) {
     }
   };
   if (!process.env.WEBPACK_SERVE) {
-    config.externals['react-simple-maps'] = {
+    config.externals['@gameworkers/react-simple-maps'] = {
       root: 'ReactSimpleMaps',
-      commonjs: 'react-simple-maps',
-      commonjs2: 'react-simple-maps',
-      amd: 'react-simple-maps'
+      commonjs: '@gameworkers/react-simple-maps',
+      commonjs2: '@gameworkers/react-simple-maps',
+      amd: '@gameworkers/react-simple-maps'
     };
     config.externals['redux'] = {
       root: 'Redux',
