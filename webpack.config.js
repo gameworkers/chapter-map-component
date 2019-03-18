@@ -1,5 +1,4 @@
 var CompressionPlugin = require('compression-webpack-plugin');
-var CopyPlugin = require('copy-webpack-plugin');
 var path = require('path');
 
 var OUTPUT_DIR = './dist';
@@ -51,9 +50,6 @@ function webpackConfig({ minimize }) {
     devtool: 'source-map',
     plugins: [
       new CompressionPlugin(),
-      new CopyPlugin([
-        { from: './src/*.json', to: '', flatten: true },
-      ]),
     ],
     optimization: {
       noEmitOnErrors: true,

@@ -19,48 +19,31 @@ const wrapperStyles = {
   fontFamily: "Roboto, sans-serif"
 };
 
-import mapPoints from "./map_data";
-
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
 import GWUMarker from "./GWUMarker";
 import { initStore } from "./tooltipStore";
 
-let smallWorldDataPromise;
+const worldDataPathname =
+  "https://gameworkers.github.io/data/third_party/world-50m.json";
+const smallWorldDataPathname =
+  "https://gameworkers.github.io/data/third_party/world-110m.json";
+const membersPathname = "https://gameworkers.github.io/data/members.json";
 let worldDataPromise;
-function getWorldData(pathname) {
+let smallWorldDataPromise;
+let membersPromise;
+function getWorldData() {
   return (worldDataPromise =
-    worldDataPromise || fetch(pathname).then(res => res.json()));
+    worldDataPromise || fetch(worldDataPathname).then(res => res.json()));
 }
-function getSmallWorldData(pathname) {
+function getSmallWorldData() {
   return (smallWorldDataPromise =
-    smallWorldDataPromise || fetch(pathname).then(res => res.json()));
+    smallWorldDataPromise ||
+    fetch(smallWorldDataPathname).then(res => res.json()));
 }
-
-const markers = mapPoints
-  .filter(point => point.chapter)
-  .sort((a, b) => {
-    // we want to make sure markers lower on the map are painted in front
-    if (a.lat < b.lat) {
-      return 1;
-    }
-    if (a.lat > b.lat) {
-      return -1;
-    }
-    if (a.lng < b.lng) {
-      return 1;
-    }
-    if (a.lng > b.lng) {
-      return -1;
-    }
-    return 0;
-  })
-  .map(point => {
-    return {
-      name: point.location,
-      coordinates: [point.lng, point.lat],
-      data: point
-    };
-  });
+function getMembers() {
+  return (membersPromise =
+    membersPromise || fetch(membersPathname).then(res => res.json()));
+}
 
 const countryNameKeys = [
   "ABBREV",
@@ -81,7 +64,9 @@ class ChapterMapComponent extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      worldData: null
+      worldData: null,
+      members: null,
+      markers: null
     };
     this.focusedMarker = null;
     this.handleCountryMove = this.handleCountryMove.bind(this);
@@ -93,23 +78,43 @@ class ChapterMapComponent extends PureComponent {
   }
 
   componentDidMount() {
-    if (
-      typeof WORLD_110M_JSON_PATH === "undefined" ||
-      typeof WORLD_50M_JSON_PATH === "undefined"
-    ) {
-      throw new Error(`
-        WORLD_110M_JSON_PATH and WORLD_50M_JSON_PATH must be defined
-        in the global scope.
-      `);
-    }
-
-    getWorldData(WORLD_50M_JSON_PATH).then(worldData => {
+    getWorldData().then(worldData => {
       this.setState({
         worldData
       });
     });
-    getSmallWorldData(WORLD_110M_JSON_PATH).then(worldData => {
+    getSmallWorldData().then(worldData => {
       this.setState(state => (state.worldData ? null : { worldData }));
+    });
+    getMembers().then(members => {
+      this.setState({
+        members,
+        markers: members
+          .filter(member => member.isChapter)
+          .sort((a, b) => {
+            // we want to make sure markers lower on the map are painted in front
+            if (a.lat < b.lat) {
+              return 1;
+            }
+            if (a.lat > b.lat) {
+              return -1;
+            }
+            if (a.lng < b.lng) {
+              return 1;
+            }
+            if (a.lng > b.lng) {
+              return -1;
+            }
+            return 0;
+          })
+          .map(member => {
+            return {
+              name: member.location,
+              coordinates: [member.lng, member.lat],
+              data: member
+            };
+          })
+      });
     });
 
     window.addEventListener("click", this.handleOutsideMarkerClick);
@@ -260,11 +265,12 @@ class ChapterMapComponent extends PureComponent {
       enablePanning,
       projection
     } = this.props;
-    const { worldData } = this.state;
+    const { worldData, members, markers } = this.state;
+    const loading = !(worldData && members && markers);
     return (
       <div className={className} style={{ ...(style || {}), width, height }}>
-        {!worldData && <div>Loading...</div>}
-        {worldData && (
+        {loading && <div>Loading...</div>}
+        {!loading && (
           <React.Fragment>
             <ComposableMap
               projection={projection}
@@ -284,10 +290,10 @@ class ChapterMapComponent extends PureComponent {
                       geographies
                         .filter(isGeographyIncluded)
                         .map((geography, i) => {
-                          const hasMatchingPoint = mapPoints.some(point => {
+                          const hasMatchingPoint = members.some(member => {
                             return geographyMatchesCountryString(
                               geography,
-                              point.country
+                              member.country
                             );
                           });
                           const style = {
