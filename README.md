@@ -28,8 +28,6 @@ import ChapterMapComponent from '@gameworkers/chapter-map-component';
 />
 ```
 
-`ChapterMapComponent` expects [`world-100m.json`](/src/world-110m.json) and [`world-50m.json`](/src/world-50m.json) to be found in the same public directory as your JavaScript bundle - the map will fail to load properly otherwise.
-
 All props are optional and have the following default values if nothing is specified:
 
 ```js

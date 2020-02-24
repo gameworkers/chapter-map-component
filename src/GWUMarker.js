@@ -1,13 +1,16 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { Marker } from "react-simple-maps";
+import { Marker } from "@gameworkers/react-simple-maps";
 
 class GWUMarker extends PureComponent {
   render() {
     const { marker, scale, ...rest } = this.props;
     return (
       <Marker key={marker.name} marker={marker} {...rest}>
-        <g transform={`scale(${scale}), translate(79, -528)`}>
+        <g
+          style={{ cursor: "pointer" }}
+          transform={`scale(${scale}), translate(79, -528)`}
+        >
           <use href="#mapmarker" />
         </g>
       </Marker>
