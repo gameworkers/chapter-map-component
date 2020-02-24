@@ -7,6 +7,7 @@ const fileName = 'chapter-map-component';
 const libraryName = 'ChapterMapComponent';
 
 function webpackConfig({ minimize }) {
+  const publicPath = '/dist';
   const config = {
     mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
     entry: {
@@ -17,12 +18,17 @@ function webpackConfig({ minimize }) {
     },
     output: {
       path: path.join(process.cwd(), OUTPUT_DIR),
-      publicPath: '/dist',
+      publicPath,
       libraryTarget: 'umd',
       libraryExport: 'default',
       library: libraryName,
       filename: '[name].js',
       globalObject: '(typeof self !== "undefined" ? self : this)'
+    },
+    serve: {
+      devMiddleware: {
+        publicPath
+      }
     },
     module: {
       rules: [
