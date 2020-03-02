@@ -162,7 +162,7 @@ function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) r
 
 var red = "#e5261a";
 
-function MarkerPath(_ref) {
+function GWUMarkerPath(_ref) {
   var fill = _ref.fill,
       stroke = _ref.stroke,
       strokeWidth = _ref.strokeWidth;
@@ -174,10 +174,22 @@ function MarkerPath(_ref) {
   });
 }
 
-function SvgContentElementWrapperWithDefs(_ref2) {
-  var children = _ref2.children,
-      forceGrayscale = _ref2.forceGrayscale,
-      rest = _objectWithoutPropertiesLoose(_ref2, ["children", "forceGrayscale"]);
+function UnionMarkerPath(_ref2) {
+  var fill = _ref2.fill,
+      stroke = _ref2.stroke,
+      strokeWidth = _ref2.strokeWidth;
+  return external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("path", {
+    fill: fill,
+    stroke: stroke,
+    strokeWidth: strokeWidth,
+    d: "\n        M-78.736,56.784c-89.734,0-162.725,73.003-162.725,162.732c0,36.571,25.572,94.673,76.01,172.686\n        c36.714,56.783,73.96,104.287,74.33,104.75c2.985,3.807,7.553,6.018,12.379,6.018c4.829,0,9.396-2.211,12.381-6.018\n        c0.37-0.463,37.622-47.971,74.33-104.75c50.438-78.013,76.012-136.121,76.012-172.686\n        C83.993,129.787,10.999,56.784-78.736,56.784z\n        M-140.173,241.81c-3.481,2.971-7.626,5.503-12.439,7.6     \n      "
+  });
+}
+
+function SvgContentElementWrapperWithDefs(_ref3) {
+  var children = _ref3.children,
+      forceGrayscale = _ref3.forceGrayscale,
+      rest = _objectWithoutPropertiesLoose(_ref3, ["children", "forceGrayscale"]);
 
   return external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.Fragment, null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("defs", null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("filter", {
     id: "grayscale"
@@ -221,17 +233,32 @@ function SvgContentElementWrapperWithDefs(_ref2) {
     height: "8",
     fill: red
   })), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", {
-    id: "mapmarker"
+    id: "gwuMarker"
   }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("rect", {
     x: "-218.979",
     y: "163.179",
     fill: "#fff",
     width: "279.333",
     height: "106.667"
-  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(MarkerPath, {
+  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(GWUMarkerPath, {
     stroke: "#fff",
     strokeWidth: 20
-  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(MarkerPath, null)))), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", {
+  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(GWUMarkerPath, null))), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", {
+    id: "unionMarker"
+  }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("rect", {
+    x: "-218.979",
+    y: "163.179",
+    fill: "#000",
+    width: "279.333",
+    height: "106.667"
+  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", null, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(UnionMarkerPath, {
+    fill: "#000",
+    stroke: "#000",
+    strokeWidth: 20
+  }), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement(UnionMarkerPath, {
+    fill: "#fff",
+    stroke: "#000"
+  })))), external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("g", {
     filter: forceGrayscale ? "url(#grayscale)" : undefined
   }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.cloneElement(children, rest)));
 }
@@ -278,7 +305,7 @@ function (_PureComponent) {
       },
       transform: "scale(" + scale + "), translate(79, -528)"
     }, external_root_React_commonjs_react_commonjs2_react_amd_react_default.a.createElement("use", {
-      href: "#mapmarker"
+      href: marker.data.isUnion ? '#unionMarker' : '#gwuMarker'
     })));
   };
 
@@ -433,7 +460,7 @@ function (_PureComponent) {
       _this2.setState({
         members: members,
         markers: members.filter(function (member) {
-          return member.isChapter;
+          return member.isChapter || member.isUnion;
         }).sort(function (a, b) {
           // we want to make sure markers lower on the map are painted in front
           if (a.lat < b.lat) {
