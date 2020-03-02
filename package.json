@@ -1,6 +1,6 @@
 {
   "name": "@gameworkers/chapter-map-component",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "React component for showing chapter distribution for Game Workers Unite",
   "main": "dist/chapter-map-component.js",
   "scripts": {
