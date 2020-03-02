@@ -11,7 +11,7 @@ class GWUMarker extends PureComponent {
           style={{ cursor: "pointer" }}
           transform={`scale(${scale}), translate(79, -528)`}
         >
-          <use href="#mapmarker" />
+          <use href={marker.data.isUnion ? '#unionMarker' : '#gwuMarker'} />
         </g>
       </Marker>
     );

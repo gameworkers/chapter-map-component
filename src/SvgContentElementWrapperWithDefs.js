@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const red = "#e5261a";
 
-function MarkerPath({ fill, stroke, strokeWidth }) {
+function GWUMarkerPath({ fill, stroke, strokeWidth }) {
   return (
     <path
       fill={fill}
@@ -32,6 +32,23 @@ function MarkerPath({ fill, stroke, strokeWidth }) {
         c-5.224-5.033-7.839-12.55-7.839-22.554v-38.718h14.905v38.333c0,5.549,1.291,9.729,3.876,12.532
         c2.575,2.809,6.161,4.217,10.744,4.217c4.579,0,8.161-1.359,10.746-4.07c2.575-2.71,3.868-6.775,3.868-12.194v-38.817h14.912
         v38.234C40.755,227.032,40.061,231.518,38.676,235.323z
+      `}
+    />
+  );
+}
+
+function UnionMarkerPath({ fill, stroke, strokeWidth }) {
+  return (
+    <path
+      fill={fill}
+      stroke={stroke}
+      strokeWidth={strokeWidth}
+      d={`
+        M-78.736,56.784c-89.734,0-162.725,73.003-162.725,162.732c0,36.571,25.572,94.673,76.01,172.686
+        c36.714,56.783,73.96,104.287,74.33,104.75c2.985,3.807,7.553,6.018,12.379,6.018c4.829,0,9.396-2.211,12.381-6.018
+        c0.37-0.463,37.622-47.971,74.33-104.75c50.438-78.013,76.012-136.121,76.012-172.686
+        C83.993,129.787,10.999,56.784-78.736,56.784z
+        M-140.173,241.81c-3.481,2.971-7.626,5.503-12.439,7.6     
       `}
     />
   );
@@ -72,7 +89,7 @@ function SvgContentElementWrapperWithDefs({
         >
           <rect style={{ opacity: 0.04 }} width="8" height="8" fill={red} />
         </pattern>
-        <g id="mapmarker">
+        <g id="gwuMarker">
           <rect
             x="-218.979"
             y="163.179"
@@ -81,8 +98,21 @@ function SvgContentElementWrapperWithDefs({
             height="106.667"
           />
           <g>
-            <MarkerPath stroke="#fff" strokeWidth={20} />
-            <MarkerPath />
+            <GWUMarkerPath stroke="#fff" strokeWidth={20} />
+            <GWUMarkerPath />
+          </g>
+        </g>
+        <g id="unionMarker">
+          <rect
+            x="-218.979"
+            y="163.179"
+            fill="#000"
+            width="279.333"
+            height="106.667"
+          />
+          <g>
+            <UnionMarkerPath fill="#000" stroke="#000" strokeWidth={20} />
+            <UnionMarkerPath fill="#fff" stroke="#000" />
           </g>
         </g>
       </defs>

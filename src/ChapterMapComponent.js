@@ -90,7 +90,7 @@ class ChapterMapComponent extends PureComponent {
       this.setState({
         members,
         markers: members
-          .filter(member => member.isChapter)
+          .filter(member => member.isChapter || member.isUnion)
           .sort((a, b) => {
             // we want to make sure markers lower on the map are painted in front
             if (a.lat < b.lat) {
