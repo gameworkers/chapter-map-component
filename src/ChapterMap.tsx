@@ -82,7 +82,10 @@ const getMarkerData = (memberData: Member[]): Marker[] =>
       data: member,
     }));
 
-interface ChapterMapProps {
+export const defaultGeographyFilter = (geography: Geo): boolean =>
+  geography.properties.REGION_UN !== "Antarctica";
+
+export interface ChapterMapProps {
   /**
    * URL where map data JSON will be fetched from. The URL should end with a
    * slash and will be concatenated with the required filenames (eg.
@@ -96,7 +99,7 @@ interface ChapterMapProps {
   width?: number;
   height?: number;
   scale?: number;
-  isGeographyIncluded?: (geography: Geo) => boolean;
+  geographyFilter?: (geography: Geo) => boolean;
   markerScale?: number;
   forceGrayscale?: boolean;
   className?: string;
@@ -114,8 +117,7 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
     width = 980,
     height = 551,
     scale = 205,
-    isGeographyIncluded = (geography) =>
-      geography.properties.REGION_UN !== "Antarctica",
+    geographyFilter = defaultGeographyFilter,
     markerScale = 0.09,
     forceGrayscale = false,
     tooltipClassName = "gwu_chapter_tooltip",
@@ -161,7 +163,7 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
           <ZoomableGroup center={[centerLng, centerLat]} zoom={zoom}>
             <Geographies geography={mapData}>
               {({ geographies }: { geographies: Geo[] }) =>
-                geographies.filter(isGeographyIncluded).map((geography, i) => {
+                geographies.filter(geographyFilter).map((geography, i) => {
                   let hasMatchingPoint = false;
                   if (memberData) {
                     hasMatchingPoint = memberData.some((member) => {

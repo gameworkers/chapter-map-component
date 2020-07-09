@@ -40,7 +40,7 @@ The component accepts the following props:
   width?: number;
   height?: number;
   scale?: number;
-  isGeographyIncluded?: (geography: Geo) => boolean;
+  geographyFilter?: (geography: Geo) => boolean;
   markerScale?: number;
   forceGrayscale?: boolean;
   className?: string;
@@ -61,8 +61,7 @@ Props have the following default values:
   width = 980,
   height = 551,
   scale = 205,
-  isGeographyIncluded = (geography) =>
-    geography.properties.REGION_UN !== "Antarctica",
+  geographyFilter = (geo: Geo) => geo.properties.REGION_UN !== "Antarctica",
   markerScale = 0.09,
   forceGrayscale = false,
   tooltipClassName = "gwu_chapter_tooltip",
