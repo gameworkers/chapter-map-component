@@ -12,6 +12,9 @@ npm install @gameworkers/chapter-map-component
 ```js
 import ChapterMapComponent from '@gameworkers/chapter-map-component';
 
+// import the tooltip styles via a method of your choosing.
+import '@gameworkers/chapter-map-component/tooltip-styles.css';
+
 // later...
 
 <ChapterMapComponent

@@ -4,7 +4,7 @@
   "description": "React component for showing chapter distribution for Game Workers Unite",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "files": ["dist"],
+  "files": ["dist", "tooltip-styles.css"],
   "scripts": {
     "dev": "parcel example/index.html -d tmp/build",
     "build": "run-s -l build:*",
