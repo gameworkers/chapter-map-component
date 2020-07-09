@@ -5,7 +5,8 @@
 Install by doing:
 
 ```console
-npm install --save @gameworkers/chapter-map-component
+npm install @gameworkers/chapter-map-component
+# or yarn add @gameworkers/chapter-map-component
 ```
 
 ```js
@@ -28,17 +29,44 @@ import ChapterMapComponent from '@gameworkers/chapter-map-component';
 />
 ```
 
-All props are optional and have the following default values if nothing is specified:
+The component accepts the following props:
+
+```ts
+{
+  mapDataUrl?: string;
+  memberDataUrl?: string;
+  centerLat?: number;
+  centerLng?: number;
+  width?: number;
+  height?: number;
+  scale?: number;
+  isGeographyIncluded?: (geography: Geo) => boolean;
+  markerScale?: number;
+  forceGrayscale?: boolean;
+  className?: string;
+  tooltipClassName?: string;
+  zoom?: number;
+  projection?: string;
+}
+```
+
+Props have the following default values:
 
 ```js
-ChapterMapComponent.defaultProps = {
-  centerLat: 0,
-  centerLng: 0,
-  width: 980,
-  height: 551,
-  scale: 205,
-  isGeographyIncluded: () => true,
-  markerScale: 0.1,
-  forceGrayscale: false
-};
+{
+  mapDataUrl = DEFAULT_MAP_DATA_URL,
+  memberDataUrl = DEFAULT_MEMBER_DATA_URL,
+  centerLat = 0,
+  centerLng = 0,
+  width = 980,
+  height = 551,
+  scale = 205,
+  isGeographyIncluded = (geography) =>
+    geography.properties.REGION_UN !== "Antarctica",
+  markerScale = 0.09,
+  forceGrayscale = false,
+  tooltipClassName = "gwu_chapter_tooltip",
+  zoom = 1,
+  projection = "geoNaturalEarth1"
+}
 ```
