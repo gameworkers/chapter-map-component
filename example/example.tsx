@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { render } from "react-dom";
 
-import ChapterMap, { ChapterMapProps, defaultGeographyFilter } from "../src";
+import ChapterMap, { ChapterMapProps } from "../src";
 
 import DownloadButtons from "./map-download";
 
@@ -47,9 +47,7 @@ const DemoApp = () => {
         height={1000}
         scale={400}
         markerScale={0.08}
-        geographyFilter={(geo) =>
-          defaultGeographyFilter(geo) && geo.properties.REGION_UN === "Americas"
-        }
+        geographyFilter={(geo) => geo.properties.REGION_UN === "Americas"}
         forceGrayscale={grayscale}
       />
       <MapWithButtons
@@ -60,9 +58,7 @@ const DemoApp = () => {
         markerScale={0.09}
         scale={1125}
         zoom={0.95}
-        geographyFilter={(geo) =>
-          defaultGeographyFilter(geo) && geo.properties.REGION_UN === "Europe"
-        }
+        geographyFilter={(geo) => geo.properties.REGION_UN === "Europe"}
         forceGrayscale={grayscale}
       />
     </>

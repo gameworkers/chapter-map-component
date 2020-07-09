@@ -20,9 +20,9 @@ import ChapterMapComponent from '@gameworkers/chapter-map-component';
   className="chapter_map"
   forceGrayscale={false}
   height={825}
-  isGeographyIncluded={function(geography) {
-    return geography.properties.REGION_UN === 'Europe';
-  }}
+  geographyFilter={
+    (geo) => geo.properties.REGION_UN === 'Europe'
+  }
   markerScale={0.1}
   scale={1125}
   width={720}
@@ -40,8 +40,9 @@ The component accepts the following props:
   width?: number;
   height?: number;
   scale?: number;
-  geographyFilter?: (geography: Geo) => boolean;
+  geographyFilter?: (geography) => boolean;
   markerScale?: number;
+  panZoomControls?: boolean;
   forceGrayscale?: boolean;
   className?: string;
   tooltipClassName?: string;
@@ -61,8 +62,9 @@ Props have the following default values:
   width = 980,
   height = 551,
   scale = 205,
-  geographyFilter = (geo: Geo) => geo.properties.REGION_UN !== "Antarctica",
+  geographyFilter = (geo) => geo.properties.REGION_UN !== "Antarctica",
   markerScale = 0.09,
+  panZoomControls = false;
   forceGrayscale = false,
   tooltipClassName = "gwu_chapter_tooltip",
   zoom = 1,

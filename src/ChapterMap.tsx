@@ -16,6 +16,13 @@ import {
 } from "react-simple-maps";
 // } from "@gameworkers/react-simple-maps";
 
+// bad typings
+declare module "react-simple-maps" {
+  interface ZoomableGroupProps {
+    filterZoomEvent: (d3Event: Event) => boolean;
+  }
+}
+
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
 import GWUMarker from "./GWUMarker";
 import useFetch from "./use-fetch";
@@ -72,6 +79,7 @@ export interface ChapterMapProps {
   scale?: number;
   geographyFilter?: (geography: Geo) => boolean;
   markerScale?: number;
+  panZoomControls?: boolean;
   forceGrayscale?: boolean;
   className?: string;
   tooltipClassName?: string;
@@ -90,6 +98,7 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
     scale = 205,
     geographyFilter = defaultGeographyFilter,
     markerScale = 0.09,
+    panZoomControls = false,
     forceGrayscale = false,
     tooltipClassName = "gwu_chapter_tooltip",
     zoom = 1,
@@ -131,7 +140,11 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
         style={{ width: "100%", height: "auto", backgroundColor: "#fff" }}
       >
         <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
-          <ZoomableGroup center={[centerLng, centerLat]} zoom={zoom}>
+          <ZoomableGroup
+            filterZoomEvent={() => panZoomControls}
+            center={[centerLng, centerLat]}
+            zoom={zoom}
+          >
             <Geographies geography={mapData}>
               {({ geographies }: { geographies: Geo[] }) =>
                 geographies.filter(geographyFilter).map((geography, i) => {
