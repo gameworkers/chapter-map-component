@@ -4,6 +4,7 @@ import { render } from "react-dom";
 import ChapterMap from "../src";
 
 import "../src/tooltip-styles.css";
+import { ChapterMapProps, defaultGeographyFilter } from "../src/ChapterMap";
 
 const BIG_PNG_SIZE = 6000;
 
@@ -23,15 +24,7 @@ function getSvgUrl(map: HTMLElement) {
   return URL.createObjectURL(new Blob([content], { type: "image/svg+xml" }));
 }
 
-const DownloadButtons = ({
-  grayscale,
-  setGrayscale,
-  map,
-}: {
-  grayscale: boolean;
-  setGrayscale: (g: boolean) => void;
-  map: HTMLDivElement;
-}) => {
+const DownloadButtons = ({ map }: { map: HTMLDivElement }) => {
   const anchor = useRef<HTMLAnchorElement | null>(null);
   const canvas = useRef<HTMLCanvasElement | null>(null);
 
@@ -102,11 +95,27 @@ const DownloadButtons = ({
   }, []);
 
   return (
-    <div style={{ position: "absolute", top: 5, left: 5 }}>
-      <button onClick={() => setGrayscale(!grayscale)}>Toggle Grayscale</button>
-      <button onClick={requestSvg}>Save SVG</button>
-      <button onClick={() => requestPng()}>Save PNG</button>
-      <button onClick={() => requestPng(true)}>Save big PNG (for print)</button>
+    <div style={{ position: "absolute", top: 10, left: 10 }}>
+      <button style={{ marginRight: 5 }} onClick={requestSvg}>
+        Save SVG
+      </button>
+      <button style={{ marginRight: 5 }} onClick={() => requestPng()}>
+        Save PNG
+      </button>
+      <button style={{ marginRight: 5 }} onClick={() => requestPng(true)}>
+        Save big PNG (for print)
+      </button>
+    </div>
+  );
+};
+
+const MapWithButtons = (props: ChapterMapProps) => {
+  const chapterMap = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <div style={{ position: "relative", marginBottom: 15 }}>
+      <DownloadButtons map={chapterMap.current!} />
+      <ChapterMap {...props} ref={chapterMap} className="chapter_map" />
     </div>
   );
 };
@@ -114,24 +123,47 @@ const DownloadButtons = ({
 const DemoApp = () => {
   const [grayscale, setGrayscale] = useState(false);
 
-  const chapterMap = useRef<HTMLDivElement | null>(null);
-
   return (
     <>
-      <DownloadButtons
-        grayscale={grayscale}
-        setGrayscale={setGrayscale}
-        map={chapterMap.current!}
+      <button
+        style={{ marginBottom: 10 }}
+        onClick={() => setGrayscale(!grayscale)}
+      >
+        Toggle Grayscale
+      </button>
+      <MapWithButtons
+        centerLat={15}
+        centerLng={15}
+        height={551}
+        markerScale={0.075}
+        scale={205}
+        width={980}
+        zoom={1}
+        forceGrayscale={grayscale}
       />
-      <ChapterMap
-        ref={chapterMap}
-        centerLat={20}
-        centerLng={-90}
+      <MapWithButtons
+        centerLat={13}
+        centerLng={-80}
         width={600}
         height={1000}
         scale={400}
         markerScale={0.08}
-        className="chapter_map"
+        geographyFilter={(geo) =>
+          defaultGeographyFilter(geo) && geo.properties.REGION_UN === "Americas"
+        }
+        forceGrayscale={grayscale}
+      />
+      <MapWithButtons
+        centerLat={52}
+        centerLng={14}
+        height={725}
+        width={720}
+        markerScale={0.09}
+        scale={1125}
+        zoom={0.95}
+        geographyFilter={(geo) =>
+          defaultGeographyFilter(geo) && geo.properties.REGION_UN === "Europe"
+        }
         forceGrayscale={grayscale}
       />
     </>
