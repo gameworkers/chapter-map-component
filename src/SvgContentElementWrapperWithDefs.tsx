@@ -81,20 +81,12 @@ function SvgContentElementWrapperWithDefs({
           <rect style={{ opacity: 0.7 }} width="8" height="8" fill={RED} />
         </pattern>
         <pattern
-          id="lessredpattern"
-          patternUnits="userSpaceOnUse"
-          width="8"
-          height="8"
-        >
-          <rect style={{ opacity: 0.3 }} width="8" height="8" fill={RED} />
-        </pattern>
-        <pattern
           id="hardlyredpattern"
           patternUnits="userSpaceOnUse"
           width="8"
           height="8"
         >
-          <rect style={{ opacity: 0.04 }} width="8" height="8" fill={RED} />
+          <rect style={{ opacity: 0.08 }} width="8" height="8" fill={RED} />
         </pattern>
         <g id="gwuMarker">
           <rect

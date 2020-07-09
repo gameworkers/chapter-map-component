@@ -166,22 +166,22 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
                 geographies.filter(geographyFilter).map((geography, i) => {
                   let hasMatchingPoint = false;
                   if (memberData) {
-                    hasMatchingPoint = memberData.some((member) => {
-                      return geographyMatchesCountryString(
-                        geography,
-                        member.country
-                      );
-                    });
+                    hasMatchingPoint = memberData.some((member) =>
+                      geographyMatchesCountryString(geography, member.country)
+                    );
                   }
 
-                  const style = {
-                    fill: hasMatchingPoint
-                      ? "url(#redpattern)"
-                      : "url(#hardlyredpattern)",
-                    stroke: "#222",
-                    strokeWidth: 0.5 / zoom,
-                    outline: "none",
-                  };
+                  const style = hasMatchingPoint
+                    ? {
+                        fill: "url(#redpattern)",
+                        stroke: "#222",
+                        strokeWidth: 0.5 / zoom,
+                        outline: "none",
+                      }
+                    : {
+                        fill: "url(#hardlyredpattern)",
+                        outline: "none",
+                      };
 
                   return (
                     <Geography
