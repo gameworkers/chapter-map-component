@@ -5,6 +5,7 @@ import ChapterMap, { ChapterMapProps, defaultGeographyFilter } from "../src";
 
 import DownloadButtons from "./map-download";
 
+import "./example.css";
 import "../src/tooltip-styles.css";
 
 const MapWithButtons = (props: ChapterMapProps) => {
