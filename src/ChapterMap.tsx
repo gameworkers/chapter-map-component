@@ -16,39 +16,16 @@ import {
 } from "react-simple-maps";
 // } from "@gameworkers/react-simple-maps";
 
-import useFetch from "./use-fetch";
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
 import GWUMarker from "./GWUMarker";
+import useFetch from "./use-fetch";
+
+import type { Geo, Member, Marker } from "./types";
 
 const DEFAULT_MAP_DATA_URL =
   "https://gameworkers.github.io/data/third_party/world-50m.json";
 const DEFAULT_MEMBER_DATA_URL =
   "https://gameworkers.github.io/data/members.json";
-
-interface Member {
-  isUnion?: boolean;
-  isChapter?: boolean;
-  lat: number;
-  lng: number;
-  location: string;
-  country?: string;
-  chapterInfo: {
-    description?: string;
-    applicationLink?: string;
-    twitter?: string;
-    email?: string;
-    website?: string;
-  };
-}
-interface Marker {
-  name: string;
-  coordinates: [number, number];
-  data: Member;
-}
-
-interface Geo {
-  properties: { [key: string]: string };
-}
 
 const countryNameKeys = [
   "ABBREV",
@@ -86,12 +63,6 @@ export const defaultGeographyFilter = (geography: Geo): boolean =>
   geography.properties.REGION_UN !== "Antarctica";
 
 export interface ChapterMapProps {
-  /**
-   * URL where map data JSON will be fetched from. The URL should end with a
-   * slash and will be concatenated with the required filenames (eg.
-   * "world-50m.json", "world-110m.json", "members.json") to obtain the final
-   * fetch URL.
-   */
   mapDataUrl?: string;
   memberDataUrl?: string;
   centerLat?: number;
@@ -205,7 +176,10 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
                 trigger="click"
                 tooltip={(args: TooltipArg) => (
                   <Tooltip {...args}>
-                    {getTooltipContent(marker, tooltipClassName)}
+                    <MarkerTooltip
+                      marker={marker}
+                      className={tooltipClassName}
+                    />
                   </Tooltip>
                 )}
               >
@@ -251,62 +225,61 @@ const Tooltip = ({
   </div>
 );
 
-const getTooltipContent = (marker: Marker, className?: string) => {
-  const {
+const MarkerTooltip = ({
+  marker: {
     data: { location, chapterInfo },
-  } = marker;
-  if (chapterInfo) {
-    const {
-      description,
-      applicationLink,
-      twitter,
-      email,
-      website,
-    } = chapterInfo;
+  },
+  className,
+}: {
+  marker: Marker;
+  className?: string;
+}) => {
+  if (!chapterInfo) return null;
 
-    return (
-      <div className={className}>
-        <h3>{location}</h3>
-        {description && <p dangerouslySetInnerHTML={{ __html: description }} />}
-        {(twitter || email || website) && (
-          <p>
-            {twitter && (
-              <>
-                <strong>Twitter: </strong>
-                <a href={`https://twitter.com/${twitter}`}>@{twitter}</a>
-                <br />
-              </>
-            )}
-            {email && (
-              <>
-                <strong>Email: </strong>
-                <a href={`mailto:${email}`}>{email}</a>
-                <br />
-              </>
-            )}
-            {website && (
-              <>
-                <strong>Website: </strong>
-                <a
-                  href={`${
-                    website.startsWith("http") ? "" : "http://"
-                  }${website}`}
-                >
-                  {website}
-                </a>
-                <br />
-              </>
-            )}
-          </p>
-        )}
-        {applicationLink && (
-          <p>
-            <a href={applicationLink}>Apply here!</a>
-          </p>
-        )}
-      </div>
-    );
-  }
+  const { description, applicationLink, twitter, email, website } = chapterInfo;
+
+  return (
+    <div className={className}>
+      <h3>{location}</h3>
+      {description && <p dangerouslySetInnerHTML={{ __html: description }} />}
+      {(twitter || email || website) && (
+        <p>
+          {twitter && (
+            <>
+              <strong>Twitter: </strong>
+              <a href={`https://twitter.com/${twitter}`}>@{twitter}</a>
+              <br />
+            </>
+          )}
+          {email && (
+            <>
+              <strong>Email: </strong>
+              <a href={`mailto:${email}`}>{email}</a>
+              <br />
+            </>
+          )}
+          {website && (
+            <>
+              <strong>Website: </strong>
+              <a
+                href={`${
+                  website.startsWith("http") ? "" : "http://"
+                }${website}`}
+              >
+                {website}
+              </a>
+              <br />
+            </>
+          )}
+        </p>
+      )}
+      {applicationLink && (
+        <p>
+          <a href={applicationLink}>Apply here!</a>
+        </p>
+      )}
+    </div>
+  );
 };
 
 export default memo(forwardRef(ChapterMap));
