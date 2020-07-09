@@ -35,7 +35,6 @@
     "react": "^16.3.0"
   },
   "dependencies": {
-    "@gameworkers/react-simple-maps": "^0.12.1-pan-fix",
     "react-popper-tooltip": "^3.0.0",
     "react-simple-maps": "^2.1.2",
     "swr": "^0.2.3"
