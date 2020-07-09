@@ -267,7 +267,7 @@ const getTooltipContent = (marker: Marker, className?: string) => {
     return (
       <div className={className}>
         <h3>{location}</h3>
-        {description && <p>{description}</p>}
+        {description && <p dangerouslySetInnerHTML={{ __html: description }} />}
         {(twitter || email || website) && (
           <p>
             {twitter && (
