@@ -2,59 +2,54 @@
   "name": "@gameworkers/chapter-map-component",
   "version": "0.8.0",
   "description": "React component for showing chapter distribution for Game Workers Unite",
-  "main": "dist/chapter-map-component.js",
+  "main": "FIXME",
+  "module": "FIXME",
   "scripts": {
-    "build:clean": "rimraf dist",
-    "build:webpack": "webpack --progress",
-    "build": "npm run build:clean && npm run build:webpack",
-    "dev": "BUILD_MODE=unminimized webpack-serve --open --open-path ./",
-    "prepare": "npm run build"
+    "dev": "parcel example/index.html",
+    "test": "run-s -l test:*",
+    "test:eslint": "eslint '{src,test}/**/*.{js,ts,tsx}'",
+    "test:prettier": "prettier '{src,test}/**/*.{css,js,ts,tsx}' -l",
+    "test:ts": "tsc --noEmit",
+    "prettier": "prettier --write '{src,test}/**/*.{css,js,ts,tsx}'"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/gameworkers/chapter-map-component.git"
   },
   "engines": {
-    "node": ">=6.0.0",
-    "npm": ">=5.0.0"
+    "node": ">=10"
   },
-  "keywords": [
-    "game",
-    "workers",
-    "unite"
-  ],
   "author": {
     "name": "Game Workers Unite",
-    "email": "GameWorkersUnite@gmail.com",
     "url": "https://gameworkersunite.org/"
   },
-  "license": "AGPL",
+  "license": "AGPL-3.0",
   "peerDependencies": {
     "react": "^16.3.0"
   },
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-loader": "^8.0.0-beta.2",
-    "compression-webpack-plugin": "^1.1.11",
-    "copy-webpack-plugin": "^5.0.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "rimraf": "^2.5.4",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.1.0",
-    "webpack-serve": "^2.0.2"
-  },
   "dependencies": {
     "@gameworkers/react-simple-maps": "^0.12.1-pan-fix",
-    "next-redux-wrapper": "^1.3.2",
-    "prop-types": "^15.7.2",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
-    "redux-tooltip": "^0.7.2"
+    "react-popper-tooltip": "^3.0.0",
+    "react-simple-maps": "^2.1.2",
+    "swr": "^0.2.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-simple-maps": "^1.0.3",
+    "@typescript-eslint/eslint-plugin": "3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.5",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.0.5",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "typescript": "^3.9.6"
   },
   "publishConfig": {
     "access": "public"

@@ -1,276 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>GWU Chapter Map Examples</title>
-    <style>
-      #grayscaleToggle {
-        margin-bottom: 1rem;
-      }
-      .map_example {
-        margin: 0 auto 3rem;
-      }
-      .chapter_map,
-      .map_code_example {
-        border: 1px solid #ccc;
-        margin-bottom: 0.3rem;
-      }
-      .map_code_example {
-        background-color: #eee;
-        padding: 0.5rem;
-        width: 600px;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1>GWU Chapter Map Examples</h1>
-      <div>
-        <button id="grayscaleToggle">Toggle Grayscale</button>
-      </div>
-      <div id="app"></div>
-    </main>
 
-    <script src="https://unpkg.com/react@16.3.0/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16.3.0/umd/react-dom.development.js"></script>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GWU Chapter Map Examples</title>
+  <style>
+    #grayscaleToggle {
+      margin-bottom: 1rem;
+    }
 
-    <script src="dist/demo-externals.js"></script>
-    <script src="dist/chapter-map-component.js"></script>
-    <script>
-      window.WORLD_110M_JSON_PATH = 'world-110m.json';
-      window.WORLD_50M_JSON_PATH = 'world-50m.json';
-      function CodeExampleWrapper({ children }) {
-        const componentName = typeof children.type === 'string'
-          ? children.type
-          : (children.type.displayName || children.type.name);
-        return (
-          React.createElement(
-            'div',
-            { className: 'map_example' },
-            children,
-            React.createElement(
-              'pre',
-              { className: 'map_code_example' },
-              React.createElement(
-                'code',
-                {},
-                `<${componentName}` +
-                Object.keys(children.props || {}).sort().map(function(propName) {
-                  const value = children.props[propName];
-                  const printedValue = (function() {
-                    switch (typeof value) {
-                      case 'string':
-                        return `"${value}"`;
-                      case 'function': {
-                        const unformatted = value.toString();
-                        const bufferSize = unformatted
-                          .split('\n')
-                          .pop()
-                          .lastIndexOf(' ') + 1;
-                        const formatted = unformatted
-                          .split('\n')
-                          .map((line, index) => {
-                            if (index === 0) {
-                              return line;
-                            }
-                            return line.slice(bufferSize - 2);
-                          }).join('\n');
-                        return `{${formatted}}`;
-                      }
-                      default:
-                        return `{${value}}`;
-                    }
-                  })();
-                  return `\n  ${propName}=${printedValue}`;
-                }).join('') +
-                '\n/>'
-              )
-            )
-          )
-        );
-      }
+    .map_example {
+      margin: 0 auto 3rem;
+    }
 
-      let forceGrayscale = false;
-      function render() {
-        ReactDOM.render(
-          React.createElement(
-            React.Fragment,
-            {},
-            React.createElement(
-              CodeExampleWrapper,
-              {},
-              React.createElement(ChapterMapComponent, {
-                markerScale: 0.075,
-                className: 'chapter_map',
-                forceGrayscale
-              })
-            ),
-            React.createElement(
-              CodeExampleWrapper,
-              {},
-              React.createElement(ChapterMapComponent, {
-                centerLat: 35,
-                centerLng: -90,
-                width: 600,
-                height: 300,
-                scale: 400,
-                isGeographyIncluded: function (geography) {
-                  return geography.properties.REGION_UN === 'Americas';
-                },
-                markerScale: 0.04,
-                className: 'chapter_map',
-                forceGrayscale
-              }),
-            ),
-            React.createElement(
-              CodeExampleWrapper,
-              {},
-              React.createElement(ChapterMapComponent, {
-                centerLat: 20,
-                centerLng: -90,
-                width: 600,
-                height: 1000,
-                scale: 400,
-                isGeographyIncluded: function(geography) {
-                  return geography.properties.REGION_UN === 'Americas';
-                },
-                markerScale: 0.08,
-                className: 'chapter_map',
-                forceGrayscale
-              })
-            ),
-            React.createElement(
-              CodeExampleWrapper,
-              {},
-              React.createElement(ChapterMapComponent, {
-                centerLat: 55,
-                centerLng: 15,
-                width: 720,
-                height: 825,
-                scale: 1125,
-                isGeographyIncluded: function(geography) {
-                  return geography.properties.REGION_UN === 'Europe';
-                },
-                className: 'chapter_map',
-                forceGrayscale
-              })
-            ),
-            React.createElement(
-              CodeExampleWrapper,
-              {},
-              React.createElement(ChapterMapComponent, {
-                centerLat: -1,
-                centerLng: 120,
-                width: 1180,
-                height: 742,
-                scale: 490,
-                isGeographyIncluded: function(geography) {
-                  return (
-                    geography.properties.REGION_UN === 'Asia' ||
-                    geography.properties.REGION_UN === 'Oceania'
-                  );
-                },
-                className: 'chapter_map',
-                forceGrayscale
-              })
-            )
-          ),
-          document.getElementById('app')
-        );
-      }
-      render();
-      document.querySelector('#grayscaleToggle')
-        .addEventListener('click', function() {
-          forceGrayscale = !forceGrayscale;
-          render();
-        });
+    .chapter_map {
+      border: 1px solid #ccc;
+      margin-bottom: 0.3rem;
+    }
+  </style>
+</head>
 
-      Array.prototype.forEach.call(
-        document.querySelectorAll('.chapter_map'),
-        function(mapContainer, index) {
-          var a = document.createElement('a');
-          var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext('2d');
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          var svgButton = document.createElement('button');
-          svgButton.textContent = 'Save SVG';
-          svgButton.style.position = 'absolute';
-          svgButton.style.top = '5px';
-          svgButton.style.left = '10px';
-          var pngButton = document.createElement('button');
-          pngButton.textContent = 'Save PNG';
-          pngButton.style.position = 'absolute';
-          pngButton.style.top = '25px';
-          pngButton.style.left = '10px';
-          var bigPngButton = document.createElement('button');
-          bigPngButton.textContent = 'Save giant PNG (for print)';
-          bigPngButton.style.position = 'absolute';
-          bigPngButton.style.top = '45px';
-          bigPngButton.style.left = '10px';
-          bigPngButton.setAttribute('data-export-width', '6000');
-          function getSvgUrl() {
-            var content = mapContainer.querySelector('svg').outerHTML;
-            if (content.indexOf('xmlns="http://www.w3.org/2000/svg"') === -1) {
-              content = content
-                // make sure it's a valid SVG file format!
-                .replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"');
-            }
-            var blob = new Blob([content], { type: 'image/svg+xml' });
-            return URL.createObjectURL(blob);
-          }
-          svgButton.onclick = function() {
-            var url = getSvgUrl();
-            a.href = url;
-            a.download = 'Chapter Map ' + (index + 1) + '.svg';
-            a.click();
-            window.URL.revokeObjectURL(url);
-          };
-          function onRequestPng(e) {
-            var url = getSvgUrl();
-            var img = new Image();
-            var exportWidth = Number(e.target.getAttribute('data-export-width'));
-            img.onload = function() {
-              if (exportWidth) {
-                canvas.width = exportWidth;
-                canvas.height = exportWidth * img.height / img.width;
-              } else {
-                canvas.width = img.width;
-                canvas.height = img.height;
-              }
-              ctx.drawImage(
-                img,
-                0,
-                0,
-                img.width,
-                img.height,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-              );
-              canvas.toBlob(function(blob) {
-                var url = window.URL.createObjectURL(blob);
-                a.href = url;
-                a.download = 'Chapter Map ' + (index + 1) + '.png';
-                a.click();
-                window.URL.revokeObjectURL(url);
-              });
-            }
-            img.src = url;
-          };
-          pngButton.onclick = onRequestPng;
-          bigPngButton.onclick = onRequestPng;
-          var containerDiv = document.createElement('div');
-          containerDiv.style.position = 'relative';
-          containerDiv.style.height = 0;
-          containerDiv.appendChild(svgButton);
-          containerDiv.appendChild(pngButton);
-          containerDiv.appendChild(bigPngButton);
-          mapContainer.appendChild(containerDiv);
-        }
-      );
-    </script>
-  </body>
+<body>
+  <main>
+    <h1>GWU Chapter Map Examples</h1>
+    <div id="app"></div>
+  </main>
+  <script src="./example.tsx"></script>
+</body>
+
 </html>
