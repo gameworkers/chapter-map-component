@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "dist/cjs",
+    "noEmit": false,
+    "declaration": true
+  },
+  "include": [
+    "src"
+  ]
+}

@@ -25,12 +25,12 @@ const DEFAULT_MAP_DATA_URL =
 const DEFAULT_MEMBER_DATA_URL =
   "https://gameworkers.github.io/data/members.json";
 
-const wrapperStyles = {
-  width: "100%",
-  maxWidth: 980,
-  margin: "0 auto",
-  fontFamily: "Roboto, sans-serif",
-};
+// const wrapperStyles = {
+//   width: "100%",
+//   maxWidth: 980,
+//   margin: "0 auto",
+//   fontFamily: "Roboto, sans-serif",
+// };
 
 interface Member {
   isUnion?: boolean;
