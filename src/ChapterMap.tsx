@@ -7,7 +7,6 @@ import React, {
 } from "react";
 
 import TooltipTrigger, { TooltipArg, ChildrenArg } from "react-popper-tooltip";
-import useSWR from "swr";
 
 import {
   ComposableMap,
@@ -17,6 +16,7 @@ import {
 } from "react-simple-maps";
 // } from "@gameworkers/react-simple-maps";
 
+import useFetch from "./use-fetch";
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
 import GWUMarker from "./GWUMarker";
 
@@ -133,15 +133,6 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
   },
   ref
 ) => {
-  const useFetch = <T,>(key: string) =>
-    useSWR<T>(key, (url: string) => fetch(url).then((res) => res.json()), {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      refreshWhenOffline: false,
-      refreshWhenHidden: false,
-      refreshInterval: 0,
-    });
-
   const { data: mapData, error: mapError } = useFetch<{ [k: string]: any }>(
     mapDataUrl
   );
@@ -152,11 +143,7 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
   const [markers, setMarkers] = useState<Marker[] | null>(null);
 
   useEffect(() => {
-    if (!memberData) {
-      setMarkers(null);
-      return;
-    }
-    setMarkers(getMarkerData(memberData));
+    setMarkers(memberData ? getMarkerData(memberData) : null);
   }, [memberData]);
 
   if (mapError || memberError) {
