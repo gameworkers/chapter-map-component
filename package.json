@@ -2,6 +2,19 @@
   "name": "@gameworkers/chapter-map-component",
   "version": "0.8.1",
   "description": "React component for showing chapter distribution for Game Workers Unite",
+  "author": {
+    "name": "Game Workers Unite",
+    "url": "https://gameworkersunite.org/"
+  },
+  "homepage": "https://github.com/gameworkers/chapter-map-component",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gameworkers/chapter-map-component.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gameworkers/chapter-map-component/issues"
+  },
+  "license": "AGPL-3.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "files": ["dist", "tooltip-styles.css"],
@@ -11,28 +24,13 @@
     "build:clean": "rm -rf dist",
     "build:cjs": "tsc -p tsconfig.build.cjs.json",
     "build:esm": "tsc -p tsconfig.build.esm.json",
-    "build:example": "parcel build example/index.html -d docs",
-    "prepublishOnly": "run-s build",
+    "build:docs": "parcel build example/index.html -d docs",
     "test": "run-s -l test:*",
     "test:eslint": "eslint '{src,test}/**/*.{js,ts,tsx}'",
     "test:prettier": "prettier '{src,test}/**/*.{css,js,ts,tsx}' -l",
     "test:ts": "tsc --noEmit",
-    "prettier": "prettier --write '{src,test}/**/*.{css,js,ts,tsx}'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gameworkers/chapter-map-component.git"
-  },
-  "engines": {
-    "node": ">=10"
-  },
-  "author": {
-    "name": "Game Workers Unite",
-    "url": "https://gameworkersunite.org/"
-  },
-  "license": "AGPL-3.0",
-  "peerDependencies": {
-    "react": "^16.3.0"
+    "prettier": "prettier --write '{src,test}/**/*.{css,js,ts,tsx}'",
+    "prepublishOnly": "run-s build"
   },
   "dependencies": {
     "react-popper-tooltip": "^3.0.0",
@@ -56,6 +54,12 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "typescript": "^3.9.6"
+  },
+  "peerDependencies": {
+    "react": "^16.8.4"
+  },
+  "engines": {
+    "node": ">=12"
   },
   "publishConfig": {
     "access": "public"
