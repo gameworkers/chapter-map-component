@@ -1,6 +1,6 @@
 # GWU Chapter Map Component
 
-## See examples [here](https://gameworkers.github.io/chapter-map-component)!
+**Check out examples [here](https://gameworkers.github.io/chapter-map-component)!**
 
 Install by doing:
 
@@ -18,8 +18,8 @@ import '@gameworkers/chapter-map-component/tooltip-styles.css';
 // later...
 
 <ChapterMapComponent
-  centerLat={55}
-  centerLng={15}
+  x={15}
+  y={55}
   className="chapter_map"
   forceGrayscale={false}
   height={825}
@@ -35,21 +35,34 @@ import '@gameworkers/chapter-map-component/tooltip-styles.css';
 The component accepts the following props:
 
 ```ts
-{
+interface ChapterMapProps {
+  /** The longitudinal offset of the map. */
+  x?: number;
+
+  /** The latitudinal offset of the map. */
+  y?: number;
+
+  zoom?: number;
+
+  /**
+   * Add this handler to make this a controlled component. You'll be responsible
+   * for passing the x, y, and zoom back into the component;
+   */
+  onPanZoom?: (pos: { coordinates: [number, number]; zoom: number }) => void;
+
+  /** Is panning/zooming permitted? */
+  panZoomControls?: boolean;
+
   mapDataUrl?: string;
   memberDataUrl?: string;
-  centerLat?: number;
-  centerLng?: number;
   width?: number;
   height?: number;
   scale?: number;
-  geographyFilter?: (geography) => boolean;
+  geographyFilter?: (geography: Geo) => boolean;
   markerScale?: number;
-  panZoomControls?: boolean;
   forceGrayscale?: boolean;
   className?: string;
   tooltipClassName?: string;
-  zoom?: number;
   projection?: string;
 }
 ```
@@ -58,19 +71,19 @@ Props have the following default values:
 
 ```js
 {
+  x = 0,
+  y = 0,
+  zoom = 1,
+  panZoomControls = false,
   mapDataUrl = DEFAULT_MAP_DATA_URL,
   memberDataUrl = DEFAULT_MEMBER_DATA_URL,
-  centerLat = 0,
-  centerLng = 0,
   width = 980,
   height = 551,
   scale = 205,
-  geographyFilter = (geo) => geo.properties.REGION_UN !== "Antarctica",
+  geographyFilter = (geo) => geo.properties.REGION_UN !== "Antarctica",,
   markerScale = 0.09,
-  panZoomControls = false;
   forceGrayscale = false,
   tooltipClassName = "gwu_chapter_tooltip",
-  zoom = 1,
   projection = "geoNaturalEarth1"
 }
 ```
