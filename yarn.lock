@@ -910,6 +910,11 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.4.tgz#11d5db19bd178936ec89cd84519c4de439574398"
   integrity sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==
 
+"@rushstack/eslint-patch@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.2.tgz#a8d0048fed2885802351144bfc651f06b5178521"
+  integrity sha512-X02i2RNDDXioOmWs2zejBtLvdTaC82ltoGFBWtdhuIoBN1tH2uGxgPterxX/hBWTCprSxVaigMK43qs76qnIgw==
+
 "@sux/react-simple-maps@^2.1.2":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@sux/react-simple-maps/-/react-simple-maps-2.1.3.tgz#731da4689eb42a9e716f70a66c6112296840ba59"
@@ -2467,6 +2472,19 @@ escodegen@~1.9.0:
     optionator "^0.8.1"
   optionalDependencies:
     source-map "~0.6.1"
+
+eslint-config-lostfictions@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-lostfictions/-/eslint-config-lostfictions-0.0.1.tgz#1249a97f966e9186746077b8a5d8b02ba0774b3c"
+  integrity sha512-+R0P1TW3gmlProylBmBvsmHdD6AQVi8kaftiap6G1XmqucbuQ2hC20SmSGvdOVTemRA4O5IBjjGehAzXn02BrA==
+  dependencies:
+    "@rushstack/eslint-patch" "^1.0.2"
+    "@typescript-eslint/eslint-plugin" "3.6.0"
+    "@typescript-eslint/parser" "^3.6.0"
+    eslint-config-prettier "^6.11.0"
+    eslint-plugin-node "^11.1.0"
+    eslint-plugin-react "^7.20.3"
+    eslint-plugin-react-hooks "^4.0.5"
 
 eslint-config-prettier@^6.11.0:
   version "6.11.0"
@@ -4870,7 +4888,7 @@ range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-react-dom@^16.8.0:
+react-dom@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
   integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
@@ -4907,17 +4925,7 @@ react-popper@^2.2.3:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
 
-react-simple-maps@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/react-simple-maps/-/react-simple-maps-2.1.2.tgz#4c6531733b9eeb0003c10ddcd822a9414a86acab"
-  integrity sha512-CuwuOomMmf/3zMtMqG9w8IKxpPUDhXHuF1p/8/8G6EMiRdYUJDysmDFGUIxD30CfkR4+9ItE0NV1pI/fZC/1cw==
-  dependencies:
-    d3-geo "^1.11.9"
-    d3-selection "^1.4.1"
-    d3-zoom "^1.8.3"
-    topojson-client "^3.0.0"
-
-react@^16.8.0:
+react@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
