@@ -10,7 +10,6 @@ import {
   ComposableMap,
   CustomZoomableGroup,
   Geographies,
-  Geography,
 } from "@sux/react-simple-maps";
 
 // bad typings
@@ -23,6 +22,7 @@ declare module "react-simple-maps" {
 }
 
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
+import TintedGeographies from "./TintedGeographies";
 import MarkerWithTooltip from "./MarkerWithTooltip";
 import useFetch from "./use-fetch";
 
@@ -32,21 +32,6 @@ const DEFAULT_MAP_DATA_URL =
   "https://gameworkers.github.io/data/third_party/world-50m.json";
 const DEFAULT_MEMBER_DATA_URL =
   "https://gameworkers.github.io/data/members.json";
-
-const countryNameKeys = [
-  "ABBREV",
-  "CONTINENT",
-  "FORMAL_EN",
-  "ISO_A2",
-  "ISO_A3",
-  "NAME",
-  "NAME_LONG",
-] as const;
-
-const geographyMatchesCountryString = (
-  geography: Geo,
-  countryString?: string
-) => countryNameKeys.some((key) => geography.properties[key] === countryString);
 
 const getMarkerData = (memberData: Member[]): Marker[] =>
   memberData
@@ -147,43 +132,14 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
             {({ k }: { x: number; y: number; k: number }) => (
               <>
                 <Geographies geography={mapData}>
-                  {({ geographies }: { geographies: Geo[] }) =>
-                    geographies.filter(geographyFilter).map((geography, i) => {
-                      let hasMatchingPoint = false;
-                      if (memberData) {
-                        hasMatchingPoint = memberData.some((member) =>
-                          geographyMatchesCountryString(
-                            geography,
-                            member.country
-                          )
-                        );
-                      }
-
-                      const style = hasMatchingPoint
-                        ? {
-                            fill: "url(#redpattern)",
-                            stroke: "#222",
-                            strokeWidth: 0.5 / k,
-                            outline: "none",
-                          }
-                        : {
-                            fill: "url(#hardlyredpattern)",
-                            outline: "none",
-                          };
-
-                      return (
-                        <Geography
-                          key={i}
-                          geography={geography}
-                          style={{
-                            default: style,
-                            hover: style,
-                            pressed: style,
-                          }}
-                        />
-                      );
-                    })
-                  }
+                  {({ geographies }: { geographies: Geo[] }) => (
+                    <TintedGeographies
+                      geo={geographies}
+                      zoom={k}
+                      filter={geographyFilter}
+                      memberData={memberData!}
+                    />
+                  )}
                 </Geographies>
                 {markers?.map((marker, i) => (
                   <MarkerWithTooltip
