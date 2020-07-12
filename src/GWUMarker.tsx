@@ -1,6 +1,5 @@
 import React, { memo, forwardRef, ForwardRefRenderFunction } from "react";
-import { Marker } from "react-simple-maps";
-// import { Marker } from "@gameworkers/react-simple-maps";
+import { Marker } from "@sux/react-simple-maps";
 
 interface ExtraEvents {
   onTouchEnd?: (event: React.SyntheticEvent) => void;

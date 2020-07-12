@@ -10,14 +10,15 @@ import TooltipTrigger, { TooltipArg, ChildrenArg } from "react-popper-tooltip";
 
 import {
   ComposableMap,
-  ZoomableGroup,
+  CustomZoomableGroup,
   Geographies,
   Geography,
-} from "react-simple-maps";
-// } from "@gameworkers/react-simple-maps";
+} from "@sux/react-simple-maps";
 
 // bad typings
 declare module "react-simple-maps" {
+  // eslint-disable-next-line no-shadow
+  export const CustomZoomableGroup: React.FunctionComponent<ZoomableGroupProps>;
   interface ZoomableGroupProps {
     filterZoomEvent: (d3Event: Event) => boolean;
   }
@@ -140,73 +141,79 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
         style={{ width: "100%", height: "auto", backgroundColor: "#fff" }}
       >
         <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
-          <ZoomableGroup
+          <CustomZoomableGroup
             filterZoomEvent={() => panZoomControls}
             center={[centerLng, centerLat]}
             zoom={zoom}
           >
-            <Geographies geography={mapData}>
-              {({ geographies }: { geographies: Geo[] }) =>
-                geographies.filter(geographyFilter).map((geography, i) => {
-                  let hasMatchingPoint = false;
-                  if (memberData) {
-                    hasMatchingPoint = memberData.some((member) =>
-                      geographyMatchesCountryString(geography, member.country)
-                    );
-                  }
-
-                  const style = hasMatchingPoint
-                    ? {
-                        fill: "url(#redpattern)",
-                        stroke: "#222",
-                        strokeWidth: 0.5 / zoom,
-                        outline: "none",
+            {({ k }: { x: number; y: number; k: number }) => (
+              <>
+                <Geographies geography={mapData}>
+                  {({ geographies }: { geographies: Geo[] }) =>
+                    geographies.filter(geographyFilter).map((geography, i) => {
+                      let hasMatchingPoint = false;
+                      if (memberData) {
+                        hasMatchingPoint = memberData.some((member) =>
+                          geographyMatchesCountryString(
+                            geography,
+                            member.country
+                          )
+                        );
                       }
-                    : {
-                        fill: "url(#hardlyredpattern)",
-                        outline: "none",
-                      };
 
-                  return (
-                    <Geography
-                      key={i}
-                      geography={geography}
-                      style={{
-                        default: style,
-                        hover: style,
-                        pressed: style,
-                      }}
-                    />
-                  );
-                })
-              }
-            </Geographies>
+                      const style = hasMatchingPoint
+                        ? {
+                            fill: "url(#redpattern)",
+                            stroke: "#222",
+                            strokeWidth: 0.5 / k,
+                            outline: "none",
+                          }
+                        : {
+                            fill: "url(#hardlyredpattern)",
+                            outline: "none",
+                          };
 
-            {markers?.map((marker) => (
-              <TooltipTrigger
-                key={marker.name}
-                placement="top"
-                trigger="click"
-                tooltip={(args: TooltipArg) => (
-                  <Tooltip {...args}>
-                    <MarkerTooltip
-                      marker={marker}
-                      className={tooltipClassName}
-                    />
-                  </Tooltip>
-                )}
-              >
-                {({ triggerRef, getTriggerProps }: ChildrenArg) => (
-                  <GWUMarker
-                    ref={triggerRef as any}
-                    marker={marker}
-                    scale={markerScale}
-                    {...getTriggerProps()}
-                  />
-                )}
-              </TooltipTrigger>
-            ))}
-          </ZoomableGroup>
+                      return (
+                        <Geography
+                          key={i}
+                          geography={geography}
+                          style={{
+                            default: style,
+                            hover: style,
+                            pressed: style,
+                          }}
+                        />
+                      );
+                    })
+                  }
+                </Geographies>
+                {markers?.map((marker) => (
+                  <TooltipTrigger
+                    key={marker.name}
+                    placement="top"
+                    trigger="click"
+                    tooltip={(args: TooltipArg) => (
+                      <Tooltip {...args}>
+                        <MarkerTooltip
+                          marker={marker}
+                          className={tooltipClassName}
+                        />
+                      </Tooltip>
+                    )}
+                  >
+                    {({ triggerRef, getTriggerProps }: ChildrenArg) => (
+                      <GWUMarker
+                        ref={triggerRef as any}
+                        marker={marker}
+                        scale={markerScale / k}
+                        {...getTriggerProps()}
+                      />
+                    )}
+                  </TooltipTrigger>
+                ))}
+              </>
+            )}
+          </CustomZoomableGroup>
         </SvgContentElementWrapperWithDefs>
       </ComposableMap>
     </div>

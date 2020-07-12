@@ -17,7 +17,10 @@
   "license": "AGPL-3.0",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "files": ["dist", "tooltip-styles.css"],
+  "files": [
+    "dist",
+    "tooltip-styles.css"
+  ],
   "scripts": {
     "dev": "parcel example/index.html -d tmp/build",
     "build": "run-s -l build:*",
@@ -33,8 +36,9 @@
     "prepublishOnly": "run-s build"
   },
   "dependencies": {
+    "@sux/react-simple-maps": "^2.1.2",
+    "prop-types": "^15.7.2",
     "react-popper-tooltip": "^3.0.0",
-    "react-simple-maps": "^2.1.2",
     "swr": "^0.2.3"
   },
   "devDependencies": {
@@ -51,8 +55,8 @@
     "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "typescript": "^3.9.6"
   },
   "peerDependencies": {

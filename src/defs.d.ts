@@ -1,3 +1,3 @@
-declare module "@gameworkers/react-simple-maps" {
+declare module "@sux/react-simple-maps" {
   export * from "react-simple-maps";
 }
