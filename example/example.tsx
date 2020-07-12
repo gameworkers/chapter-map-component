@@ -61,6 +61,21 @@ const DemoApp = () => {
         geographyFilter={(geo) => geo.properties.REGION_UN === "Europe"}
         forceGrayscale={grayscale}
       />
+      <div style={{ marginBottom: 15 }}>
+        <p>Pannable and zoomable version:</p>
+        <ChapterMap
+          centerLng={15}
+          centerLat={15}
+          zoom={1}
+          panZoomControls
+          height={551}
+          markerScale={0.075}
+          scale={205}
+          width={980}
+          className="chapter_map"
+          forceGrayscale={grayscale}
+        />
+      </div>
     </>
   );
 };
