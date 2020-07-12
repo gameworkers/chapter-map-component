@@ -4,6 +4,7 @@ import React, {
   forwardRef,
   memo,
   ForwardRefRenderFunction,
+  useCallback,
 } from "react";
 
 import {
@@ -100,6 +101,12 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
 
   const [markers, setMarkers] = useState<Marker[] | null>(null);
 
+  const [visibleTooltip, setVisibleTooltip] = useState<number | null>(null);
+
+  const handleMoveStart = useCallback(() => {
+    setVisibleTooltip(null);
+  }, []);
+
   useEffect(() => {
     setMarkers(memberData ? getMarkerData(memberData) : null);
   }, [memberData]);
@@ -128,6 +135,7 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
             filterZoomEvent={() => panZoomControls}
             center={[x, y]}
             zoom={zoom}
+            onMoveStart={handleMoveStart}
             onMoveEnd={onPanZoom}
           >
             {({ k }: { x: number; y: number; k: number }) => (
@@ -148,6 +156,10 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
                     marker={marker}
                     className={tooltipClassName}
                     scale={markerScale / k}
+                    onTooltipChange={(vis) => {
+                      setVisibleTooltip(vis ? i : null);
+                    }}
+                    showTooltip={visibleTooltip === i}
                   />
                 ))}
               </>

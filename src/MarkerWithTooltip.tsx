@@ -10,14 +10,21 @@ const MarkerWithTooltip = ({
   marker,
   scale,
   className,
+  onTooltipChange,
+  showTooltip,
 }: {
   marker: Marker;
   scale: number;
   className: string;
+  onTooltipChange: (visible: boolean) => void;
+  showTooltip: boolean;
 }) => (
   <TooltipTrigger
     placement="top"
     trigger="click"
+    onVisibilityChange={onTooltipChange}
+    tooltipShown={showTooltip}
+    closeOnReferenceHidden
     tooltip={(args: TooltipArg) => (
       <Tooltip {...args}>
         <MarkerTooltip marker={marker} className={className} />
