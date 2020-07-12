@@ -12,15 +12,6 @@ import {
   Geographies,
 } from "@sux/react-simple-maps";
 
-// bad typings
-declare module "react-simple-maps" {
-  // eslint-disable-next-line no-shadow
-  export const CustomZoomableGroup: React.FunctionComponent<ZoomableGroupProps>;
-  interface ZoomableGroupProps {
-    filterZoomEvent: (d3Event: Event) => boolean;
-  }
-}
-
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
 import TintedGeographies from "./TintedGeographies";
 import MarkerWithTooltip from "./MarkerWithTooltip";
@@ -54,38 +45,47 @@ export const defaultGeographyFilter = (geography: Geo): boolean =>
   geography.properties.REGION_UN !== "Antarctica";
 
 export interface ChapterMapProps {
+  /** The longitudinal offset of the map. */
+  x?: number;
+  /** The latitudinal offset of the map. */
+  y?: number;
+  zoom?: number;
+  /**
+   * Add this handler to make this a controlled component. You'll be responsible
+   * for passing the x, y, and zoom back into the component;
+   */
+  onPanZoom?: (pos: { coordinates: [number, number]; zoom: number }) => void;
+  /** Is panning/zooming permitted? */
+  panZoomControls?: boolean;
   mapDataUrl?: string;
   memberDataUrl?: string;
-  centerLat?: number;
-  centerLng?: number;
   width?: number;
   height?: number;
   scale?: number;
   geographyFilter?: (geography: Geo) => boolean;
   markerScale?: number;
-  panZoomControls?: boolean;
   forceGrayscale?: boolean;
   className?: string;
   tooltipClassName?: string;
-  zoom?: number;
   projection?: string;
 }
 
 const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
   {
+    x = 0,
+    y = 0,
+    zoom = 1,
+    onPanZoom,
+    panZoomControls = false,
     mapDataUrl = DEFAULT_MAP_DATA_URL,
     memberDataUrl = DEFAULT_MEMBER_DATA_URL,
-    centerLat = 0,
-    centerLng = 0,
     width = 980,
     height = 551,
     scale = 205,
     geographyFilter = defaultGeographyFilter,
     markerScale = 0.09,
-    panZoomControls = false,
     forceGrayscale = false,
     tooltipClassName = "gwu_chapter_tooltip",
-    zoom = 1,
     projection = "geoNaturalEarth1",
     className,
   },
@@ -126,8 +126,9 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
         <SvgContentElementWrapperWithDefs forceGrayscale={forceGrayscale}>
           <CustomZoomableGroup
             filterZoomEvent={() => panZoomControls}
-            center={[centerLng, centerLat]}
+            center={[x, y]}
             zoom={zoom}
+            onMoveEnd={onPanZoom}
           >
             {({ k }: { x: number; y: number; k: number }) => (
               <>
