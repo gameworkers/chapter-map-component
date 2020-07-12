@@ -6,8 +6,6 @@ import React, {
   ForwardRefRenderFunction,
 } from "react";
 
-import TooltipTrigger, { TooltipArg, ChildrenArg } from "react-popper-tooltip";
-
 import {
   ComposableMap,
   CustomZoomableGroup,
@@ -25,7 +23,7 @@ declare module "react-simple-maps" {
 }
 
 import SvgContentElementWrapperWithDefs from "./SvgContentElementWrapperWithDefs";
-import GWUMarker from "./GWUMarker";
+import MarkerWithTooltip from "./MarkerWithTooltip";
 import useFetch from "./use-fetch";
 
 import type { Geo, Member, Marker } from "./types";
@@ -187,117 +185,19 @@ const ChapterMap: ForwardRefRenderFunction<HTMLDivElement, ChapterMapProps> = (
                     })
                   }
                 </Geographies>
-                {markers?.map((marker) => (
-                  <TooltipTrigger
-                    key={marker.name}
-                    placement="top"
-                    trigger="click"
-                    tooltip={(args: TooltipArg) => (
-                      <Tooltip {...args}>
-                        <MarkerTooltip
-                          marker={marker}
-                          className={tooltipClassName}
-                        />
-                      </Tooltip>
-                    )}
-                  >
-                    {({ triggerRef, getTriggerProps }: ChildrenArg) => (
-                      <GWUMarker
-                        ref={triggerRef as any}
-                        marker={marker}
-                        scale={markerScale / k}
-                        {...getTriggerProps()}
-                      />
-                    )}
-                  </TooltipTrigger>
+                {markers?.map((marker, i) => (
+                  <MarkerWithTooltip
+                    key={i}
+                    marker={marker}
+                    className={tooltipClassName}
+                    scale={markerScale / k}
+                  />
                 ))}
               </>
             )}
           </CustomZoomableGroup>
         </SvgContentElementWrapperWithDefs>
       </ComposableMap>
-    </div>
-  );
-};
-
-const Tooltip = ({
-  arrowRef,
-  tooltipRef,
-  getArrowProps,
-  getTooltipProps,
-  placement,
-  children,
-}: TooltipArg & { children: React.ReactNode }) => (
-  <div
-    {...getTooltipProps({
-      ref: tooltipRef,
-      className: "tooltip-container",
-    })}
-  >
-    <div
-      {...getArrowProps({
-        ref: arrowRef,
-        className: "tooltip-arrow",
-        "data-placement": placement,
-      })}
-    />
-    {children}
-  </div>
-);
-
-const MarkerTooltip = ({
-  marker: {
-    data: { location, chapterInfo },
-  },
-  className,
-}: {
-  marker: Marker;
-  className?: string;
-}) => {
-  if (!chapterInfo) return null;
-
-  const { description, applicationLink, twitter, email, website } = chapterInfo;
-
-  return (
-    <div className={className}>
-      <h3>{location}</h3>
-      {description && <p dangerouslySetInnerHTML={{ __html: description }} />}
-      {(twitter || email || website) && (
-        <p>
-          {twitter && (
-            <>
-              <strong>Twitter: </strong>
-              <a href={`https://twitter.com/${twitter}`}>@{twitter}</a>
-              <br />
-            </>
-          )}
-          {email && (
-            <>
-              <strong>Email: </strong>
-              <a href={`mailto:${email}`}>{email}</a>
-              <br />
-            </>
-          )}
-          {website && (
-            <>
-              <strong>Website: </strong>
-              <a
-                href={`${
-                  website.startsWith("http") ? "" : "http://"
-                }${website}`}
-              >
-                {website}
-              </a>
-              <br />
-            </>
-          )}
-        </p>
-      )}
-      {applicationLink && (
-        <p>
-          <a href={applicationLink}>Apply here!</a>
-        </p>
-      )}
     </div>
   );
 };
