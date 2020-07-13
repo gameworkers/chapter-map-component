@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { render } from "react-dom";
 
 import ChapterMap, { ChapterMapProps } from "../src";
@@ -11,12 +11,12 @@ import "./example.css";
 import "./mapzoombuttons.css";
 
 const MapWithDownloadButtons = (props: ChapterMapProps) => {
-  const chapterMap = useRef<HTMLDivElement | null>(null);
+  const [chapterMap, setChapterMap] = useState<HTMLDivElement | null>(null);
 
   return (
     <div style={{ position: "relative", marginBottom: 30 }}>
-      <DownloadButtons map={chapterMap.current!} />
-      <ChapterMap {...props} ref={chapterMap} className="chapter_map" />
+      <DownloadButtons map={chapterMap!} />
+      <ChapterMap {...props} ref={setChapterMap} className="chapter_map" />
     </div>
   );
 };
