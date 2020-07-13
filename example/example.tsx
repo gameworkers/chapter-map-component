@@ -5,10 +5,10 @@ import ChapterMap, { ChapterMapProps } from "../src";
 
 import DownloadButtons from "./map-download";
 
+import "react-popper-tooltip/dist/styles.css";
+
 import "./example.css";
 import "./mapzoombuttons.css";
-
-import "../tooltip-styles.css";
 
 const MapWithDownloadButtons = (props: ChapterMapProps) => {
   const chapterMap = useRef<HTMLDivElement | null>(null);

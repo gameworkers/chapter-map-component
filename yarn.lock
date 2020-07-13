@@ -905,7 +905,7 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
-"@popperjs/core@^2.4.3":
+"@popperjs/core@^2.4.4":
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.4.tgz#11d5db19bd178936ec89cd84519c4de439574398"
   integrity sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==
@@ -2481,10 +2481,10 @@ escodegen@~1.9.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-lostfictions@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-lostfictions/-/eslint-config-lostfictions-0.0.1.tgz#1249a97f966e9186746077b8a5d8b02ba0774b3c"
-  integrity sha512-+R0P1TW3gmlProylBmBvsmHdD6AQVi8kaftiap6G1XmqucbuQ2hC20SmSGvdOVTemRA4O5IBjjGehAzXn02BrA==
+eslint-config-lostfictions@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-lostfictions/-/eslint-config-lostfictions-0.1.0.tgz#0b11c6404e8bed2be38b0af7cebfd3898acec5c3"
+  integrity sha512-VKFYTRM2IqVb9ImH06+oVEYdmsR5fFeylKf7IC6d2hwR+kpXm1+rOMWTPpvdRPqyQm8BNhu194hYo6POlHbEWQ==
   dependencies:
     "@rushstack/eslint-patch" "^1.0.2"
     "@typescript-eslint/eslint-plugin" "3.6.0"
@@ -4916,13 +4916,13 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-popper-tooltip@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-popper-tooltip/-/react-popper-tooltip-3.0.0.tgz#06c20d8e477d0fe2a79461a43734ef2a66e8d1a3"
-  integrity sha512-WPlp6CD521cpajeAOOBmLcJJJgXmoregLS+Z6MFEqgHsadNbcbF/q+UJYF4QpL5fwzxssfXFkh8YoDDZ2bk0YA==
+react-popper-tooltip@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-popper-tooltip/-/react-popper-tooltip-3.1.0.tgz#fd7c7a39b344538e0cbd00ce6fac3147f72d2589"
+  integrity sha512-uoLUGtQSQyf4DucJQWXdZVAf3u/FFAHxox74y2GWP2Fy6D0lT9YL/7QIRSGsMI5USCHsS7HuHD4okVGAhctIGg==
   dependencies:
     "@babel/runtime" "^7.10.4"
-    "@popperjs/core" "^2.4.3"
+    "@popperjs/core" "^2.4.4"
     react-popper "^2.2.3"
 
 react-popper@^2.2.3:

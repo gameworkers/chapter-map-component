@@ -1,6 +1,6 @@
 {
   "name": "@sux/chapter-map-component",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "React component for showing chapter distribution for Game Workers Unite",
   "author": {
     "name": "Game Workers Unite",
@@ -30,14 +30,14 @@
     "build:docs": "parcel build example/index.html -d docs",
     "test": "run-s -l test:*",
     "test:eslint": "eslint '{src,test}/**/*.{js,ts,tsx}'",
-    "test:prettier": "prettier '{src,test}/**/*.{css,js,ts,tsx}' -l",
+    "test:prettier": "prettier '{src,test}/**/*.{js,ts,tsx}' -l",
     "test:ts": "tsc --noEmit",
-    "prettier": "prettier --write '{src,test}/**/*.{css,js,ts,tsx}'",
+    "prettier": "prettier --write '{src,test}/**/*.{js,ts,tsx}'",
     "prepublishOnly": "run-s build"
   },
   "dependencies": {
     "@sux/react-simple-maps": "^2.1.4",
-    "react-popper-tooltip": "^3.0.0",
+    "react-popper-tooltip": "^3.1.0",
     "swr": "^0.2.3"
   },
   "devDependencies": {
@@ -45,7 +45,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-simple-maps": "^1.0.3",
     "eslint": "^7.4.0",
-    "eslint-config-lostfictions": "^0.0.1",
+    "eslint-config-lostfictions": "^0.1.0",
     "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.0.5",
