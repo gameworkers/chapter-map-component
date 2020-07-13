@@ -1,9 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-const red = "#e5261a";
+const RED = "#e5261a";
 
-function GWUMarkerPath({ fill, stroke, strokeWidth }) {
+type PathProps = Partial<{
+  fill: string;
+  stroke: string;
+  strokeWidth: number;
+}>;
+
+function GWUMarkerPath({ fill, stroke, strokeWidth }: PathProps) {
   return (
     <path
       fill={fill}
@@ -37,7 +42,7 @@ function GWUMarkerPath({ fill, stroke, strokeWidth }) {
   );
 }
 
-function UnionMarkerPath({ fill, stroke, strokeWidth }) {
+function UnionMarkerPath({ fill, stroke, strokeWidth }: PathProps) {
   return (
     <path
       fill={fill}
@@ -48,7 +53,7 @@ function UnionMarkerPath({ fill, stroke, strokeWidth }) {
         c36.714,56.783,73.96,104.287,74.33,104.75c2.985,3.807,7.553,6.018,12.379,6.018c4.829,0,9.396-2.211,12.381-6.018
         c0.37-0.463,37.622-47.971,74.33-104.75c50.438-78.013,76.012-136.121,76.012-172.686
         C83.993,129.787,10.999,56.784-78.736,56.784z
-        M-140.173,241.81c-3.481,2.971-7.626,5.503-12.439,7.6     
+        M-140.173,241.81c-3.481,2.971-7.626,5.503-12.439,7.6
       `}
     />
   );
@@ -57,10 +62,12 @@ function UnionMarkerPath({ fill, stroke, strokeWidth }) {
 function SvgContentElementWrapperWithDefs({
   children,
   forceGrayscale,
-  ...rest
+}: {
+  children: React.ReactNode;
+  forceGrayscale?: boolean;
 }) {
   return (
-    <React.Fragment>
+    <>
       <defs>
         <filter id="grayscale">
           <feColorMatrix type="saturate" values="0" />
@@ -71,15 +78,7 @@ function SvgContentElementWrapperWithDefs({
           width="8"
           height="8"
         >
-          <rect style={{ opacity: 0.7 }} width="8" height="8" fill={red} />
-        </pattern>
-        <pattern
-          id="lessredpattern"
-          patternUnits="userSpaceOnUse"
-          width="8"
-          height="8"
-        >
-          <rect style={{ opacity: 0.3 }} width="8" height="8" fill={red} />
+          <rect style={{ opacity: 0.7 }} width="8" height="8" fill={RED} />
         </pattern>
         <pattern
           id="hardlyredpattern"
@@ -87,7 +86,7 @@ function SvgContentElementWrapperWithDefs({
           width="8"
           height="8"
         >
-          <rect style={{ opacity: 0.04 }} width="8" height="8" fill={red} />
+          <rect style={{ opacity: 0.08 }} width="8" height="8" fill={RED} />
         </pattern>
         <g id="gwuMarker">
           <rect
@@ -116,16 +115,9 @@ function SvgContentElementWrapperWithDefs({
           </g>
         </g>
       </defs>
-      <g filter={forceGrayscale ? "url(#grayscale)" : undefined}>
-        {React.cloneElement(children, rest)}
-      </g>
-    </React.Fragment>
+      <g filter={forceGrayscale ? "url(#grayscale)" : undefined}>{children}</g>
+    </>
   );
 }
-
-SvgContentElementWrapperWithDefs.propTypes = {
-  children: PropTypes.element.isRequired,
-  forceGrayscale: PropTypes.bool
-};
 
 export default SvgContentElementWrapperWithDefs;

@@ -1,0 +1,29 @@
+.zoomcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 780px;
+}
+
+.zoom_buttonscontainer {
+  width: 100%;
+  position: relative;
+}
+
+.zoom_buttons {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.zoom_button {
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 12px;
+}
+
+.zoom_tooltip {
+  max-width: 420px;
+}

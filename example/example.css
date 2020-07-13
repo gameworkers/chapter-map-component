@@ -1,0 +1,10 @@
+.chapter_map {
+  border: 1px solid #ccc;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
