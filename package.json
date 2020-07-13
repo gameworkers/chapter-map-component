@@ -24,7 +24,7 @@
   "scripts": {
     "dev": "parcel example/index.html -d tmp/build",
     "build": "run-s -l build:*",
-    "build:clean": "rm -rf dist",
+    "build:clean": "rm -rf dist docs",
     "build:cjs": "tsc -p tsconfig.build.cjs.json",
     "build:esm": "tsc -p tsconfig.build.esm.json",
     "build:docs": "parcel build example/index.html -d docs",

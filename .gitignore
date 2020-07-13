@@ -1,6 +1,5 @@
 node_modules
 /dist/
-/esm/
 /tmp/
 /.cache/
 npm-debug.log*
